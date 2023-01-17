@@ -1,0 +1,84 @@
+<div class="container mx-auto px-8 py-12 bg-white/[0.9] rounded-lg w-1/2 lg:w-1/3 pb-1/2 hidden text-sm" id="reset"
+     style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <h1 class="text-xl">Reset Password</h1>
+    <p class="text-gray-400 my-2">Enter your username. We will send a reset code to that email.</p>
+    <div class="relative mt-4">
+        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pb-2 pointer-events-none material-icons text-gray-500">
+            mail
+        </div>
+        <input id="reset-username" class="pl-11 p-2.5 px-4 py-3 w-full rounded-md bg-gray-100 border-transparent text-sm
+           focus:border-gray-500 focus:bg-white focus:ring-0" placeholder="Username" style="-webkit-user-select: text;">
+    </div>
+
+    <button onclick="resetScreen()" style="margin-right:10px;float:left;"
+            class="mt-4 px-4 py-3 leading-6 text-base rounded-md border border-transparent text-white focus:outline-none
+            bg-blue-500 text-blue-100 hover:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer
+            inline-flex items-center w-40 justify-center items-center font-medium focus:outline-none">
+        <svg class="inline-block w-6 h-6" fill="none" stroke="currentColor"
+             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+        </svg>
+        Back
+    </button>
+    <button id="send" class="mt-4 px-4 py-3 leading-6 text-base rounded-md border border-transparent text-white
+        focus:outline-none bg-blue-500 text-blue-100 hover:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+        cursor-pointer inline-flex items-center w-40 justify-center items-center font-medium focus:outline-none">Send
+    </button>
+
+    <div class="pageCount"></div>
+</div>
+
+<div class="container mx-auto px-8 py-12 bg-white/[0.9] rounded-lg w-1/2 lg:w-1/3 pb-1/2 hidden text-sm" id="resetCode"
+     style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <h1 class="text-xl">Reset Password</h1>
+    <p class="text-gray-400 my-2" id="username-email">Enter the emailed code and your new
+        password.</p>
+    <div class="relative mt-4">
+        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pb-2 pointer-events-none material-icons
+         text-gray-500 mt-1">mail
+        </div>
+        <input id="code" class="pl-11 p-2.5 px-4 py-3 w-full rounded-md bg-gray-100 border-transparent text-sm
+             focus:border-gray-500 focus:bg-white focus:ring-0" placeholder="Code" style="-webkit-user-select: text;">
+    </div>
+    <p class="text-sm text-red-500 error"></p>
+
+    <div class="relative mt-4">
+        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pb-2 pointer-events-none material-icons
+         text-gray-500 mt-1 transform rotate-45">key
+        </div>
+        <input id="newPsw" class="pl-11 p-2.5 px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:bg-white
+             focus:border-gray-500 focus:ring-0 text-sm" placeholder="New Password" style="-webkit-user-select: text;"
+               autocomplete="new-password" type="password">
+    </div>
+    <p class="text-sm text-red-500 error"></p>
+
+    <div class="flex items-center mt-6">
+        <button onclick="codeScreen()" style="margin-right:10px"
+                class="mt-4 px-4 py-3 leading-6 text-base rounded-md border border-transparent text-white focus:outline-none
+            bg-blue-500 text-blue-100 hover:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer
+            inline-flex items-center w-40 justify-center items-center font-medium focus:outline-none">
+            <svg class="inline-block w-6 h-6" fill="none" stroke="currentColor"
+                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+            </svg>
+            Back
+        </button>
+        <button id="resetPsw" class="mt-4 px-4 py-3 leading-6 text-base rounded-md border border-transparent text-white
+        focus:outline-none bg-blue-500 text-blue-100 hover:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+        cursor-pointer inline-flex items-center w-48 justify-center items-center font-medium focus:outline-none">
+            Reset Password
+        </button>
+    </div>
+
+    <div class="pageCount"></div>
+</div>
+
+<style>
+    #send:disabled, #resetPsw:disabled {
+        background-color: rgb(28 100 242);
+        color: lightgray;
+    }
+</style>
+<script src="/static/js/main/reset.js"></script>

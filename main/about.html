@@ -1,0 +1,262 @@
+{% extends "layout.html" %}
+{% block main %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap');
+
+        .dark #github {
+            filter: invert(1);
+        }
+
+        #datext img {
+            width: 2.5em;
+            margin: 10px;
+            display: inline-block;
+        }
+
+        #datext a {
+            color: #00AFF4;
+            font-weight: bold;
+            font-family: "Roboto";
+            height: 3em;
+
+        }
+
+        hr {
+            border: 0;
+            border-radius: 5px;
+            background: linear-gradient(to right, #ea00ff, #00a2ff, red);
+            height: 5px;
+            filter: blur(2px);
+            -webkit-animation: Animation 5s ease infinite;
+            -moz-animation: Animation 5s ease infinite;
+            animation: Animation 5s ease infinite;
+        }
+
+        @-webkit-keyframes Animation {
+            0% {
+                background-position: 10% 0%
+            }
+            50% {
+                background-position: 91% 100%
+            }
+            100% {
+                background-position: 10% 0%
+            }
+        }
+
+        @-moz-keyframes Animation {
+            0% {
+                background-position: 10% 0%
+            }
+            50% {
+                background-position: 91% 100%
+            }
+            100% {
+                background-position: 10% 0%
+            }
+        }
+
+        @keyframes Animation {
+            0% {
+                background-position: 10% 0%
+            }
+            50% {
+                background-position: 91% 100%
+            }
+            100% {
+                background-position: 10% 0%
+            }
+        }
+
+    </style>
+    <html>
+    <body>
+    {% include "utils/navbar.html" %}
+    <div class="overflow-hidden" tyle="text-align:justify;  text-justify:auto;">
+        <div id="datext" style="margin: auto;padding: 20vh 0;width:70%;">
+            <h1 class="text-5xl text-blue-600 dark:text-blue-400">Nebulus. Education. Redefined</h1><br><br>
+            <h1 class="text-xl text-gray-400 uppercase">A Learning, All In One Experience</h1><br><br>
+            <p class="text-xl text-black dark:text-white">
+                Nebulus helps you have your whole learning experience organized and simple. First, we offer many
+                connections. No more switching between websites. You can connect your Schoology, Google Classroom, and
+                Canvas accounts connected on Nebulus for easy access. You can also stay organized with Nebulus. There is
+                no need to have your papers, documents, assignments, textbooks, calendars, and events all over the
+                place. Everything is organized for you in an easy-to-use way! You can have everything you need for
+                school in one place. Additionally, we understand studying and learning can be difficult. We have tools
+                to organize your studying, organize your materials, make learning fun, and keep you focused! You can use
+                our study timers, test review planning, etc. We have many extensions and integrations to enrich your
+                experience. We have Calculator integrations, a Graphing Calculator, a Dictionary, a Plagarism Checker, a
+                World Map, a Periodic Table, a built-in IDE (Code Editor), and a Document editor (that can edit Word or
+                Google Docs), and much more! We are adding even more features for our Stable release on December 23rd.
+            </p><br>
+
+            <img src="/static/images/logos/discord.png"><a href="https://discord.gg/QNgTSN2PBM">https://discord.gg/QNgTSN2PBM</a><br>
+            <img src="/static/images/logos/twitter.png"> <a href="https://twitter.com/Nebuluslearning">https://twitter.com/Nebuluslearning</a><br>
+            <img id="github" src="/static/images/logos/github.png"><a
+                href="https://github.com/ProjectNebulus/ProjectNebulus">https://github.com/ProjectNebulus</a><br>
+            <img src="/static/images/logos/linkedin.png"><a href="https://linkedin.com/company/nebulus-lms">https://linkedin.com/company/nebulus-lms</a><br>
+            <img src="/static/images/logos/youtube.png"><a
+                href="https://www.youtube.com/channel/UCcuhNzvkjNkEYdJFuGsH4wg/about">https://www.youtube.com/channel/UCcuhNzvkjNkEYdJFuGsH4wg/about</a><br>
+            <img src="/static/images/logos/facebook.png"> <a
+                href="https://www.facebook.com/profile.php?id=100079149206273">https://www.facebook.com/profile.php?id=100079149206273</a><br>
+            <img src="/static/images/logos/reddit.png"><a href="https://www.reddit.com/r/Nebulus">https://www.reddit.com/r/Nebulus</a><br>
+        </div>
+        </div>
+        <hr class="dark:text-white">
+        <br>
+        <h1 class="text-3xl text-black dark:text-white">Our Team</h1><br>
+        <div
+             style="margin:20px;padding:10px;float:left;" id="people">
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            const peopleDiv = document.getElementById("people");
+
+            const people = [
+                {
+                    image: "nicholas.png",
+                    name: "Nicholas Wang",
+                    title: "Chief Executive Officer",
+                    profileLink: "808435152270917654"
+                },
+                {
+                    image: "neel.gif",
+                    name: "Neel Parpia",
+                    title: "Chief Technology Officer",
+                    profileLink: "751594192739893298"
+                },
+                {
+                    image: "rishaan.jpg",
+                    name: "Rishaan Desai",
+                    title: "President & Chief Strategy Officer",
+                    profileLink: "622179531301847054"
+                },
+                {
+                    image: "aaryan.PNG",
+                    name: "Aaryan Parikh",
+                    title: "Chief Operations Officer",
+                    profileLink: "739958520329404536"
+                },
+                {
+                    image: "Gam3rr2.png",
+                    name: "Gam3rr",
+                    title: "Chief of InfoSec",
+                    profileLink: "849731649289453629"
+                },
+                {
+                    image: "kev.png",
+                    name: "Kevin Ma",
+                    title: "Co-Chief Operations Officer",
+                    profileLink: "679867543066116169" // to change later, do not touch
+                },
+                {
+                    image: "Benjamin.png",
+                    name: "Benjamin Zhang",
+                    title: "Chief Information Officer",
+                    profileLink: "738821494871687199"
+                },
+                {
+                    image: "demi.png",
+                    name: "Demi Zheng",
+                    title: "Co-Chief Marketing Officer",
+                    profileLink: "716730842830995466"
+                },
+                {
+                    image: "aryav.png",
+                    name: "Aryav Kaushik",
+                    title: "Co-Chief Marketing Officer",
+                    profileLink: "665804534831906876"
+                },
+                {
+                    image: "hanz.png",
+                    name: "Hanz Baek",
+                    title: "Senior VP of Marketing",
+                    profileLink: "786394888404992082"
+                },
+                {
+                    image: "vedh.jpeg",
+                    name: "Vedh Reddy",
+                    title: "Senior VP of Operations",
+                    profileLink: "860946211116154911"
+                },
+                {
+                    image: "timothy1.webp",
+                    name: "Timothy Liu",
+                    title: "VP of Software Engineering",
+                    profileLink: "774061881367068712"
+                },
+                {
+                    image: "vivian.webp",
+                    name: "Vivian Liao",
+                    title: "VP of Graphic Design and Art",
+                    profileLink: "570795812850892813"
+                },
+                {
+                    image: "rhyley.webp",
+                    name: "Rhyley Plant",
+                    title: "Software Developer",
+                    profileLink: "413553618101338118"
+                },
+                {
+                    image: "timothy2.webp",
+                    name: "Timothy Hu",
+                    title: "Former Developer",
+                    profileLink: "395695390097408000"
+                },
+            ]
+
+            people.innerHTML += '<h1 class="text-3xl text-black dark:text-white">Executives</h1>'
+
+            for (const person of people) {
+                const bgDiv = document.createElement("div");
+                bgDiv.className = "max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700";
+                bgDiv.style.margin = "1.5rem";
+                bgDiv.style.padding = "1rem";
+                bgDiv.style.float = "left";
+
+                const bodyDiv = document.createElement("div");
+                bodyDiv.className = "flex flex-col items-center pb-5 mt-5";
+
+                const img = document.createElement("img");
+                img.className = "mb-3 w-24 h-24 rounded-full shadow-lg";
+                img.src = "/static/people/" + person.image;
+
+                const name = document.createElement("h3");
+                name.className = "mb-1 text-xl font-medium text-gray-900 dark:text-white";
+                name.innerHTML = person.name;
+
+                const title = document.createElement("span");
+                title.className = "text-sm text-gray-500 dark:text-gray-400";
+                title.innerHTML = person.title;
+
+                bodyDiv.append(img, name, title);
+                bgDiv.append(bodyDiv);
+
+                const buttons = document.createElement("div");
+                buttons.className = "flex mt-4 space-x-3 lg:mt-6";
+                let discord = person.profileLink;
+                const viewProfile = document.createElement("a");
+                viewProfile.className = "inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800";
+                viewProfile.href = "https://discord.com/users/" + discord;
+                viewProfile.target = "_blank";
+                viewProfile.innerHTML = "View Profile";
+
+                const message = document.createElement("a");
+                message.className = "inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-800";
+                message.href = "https://discord.com/users/" + discord;
+                message.target = "_blank";
+                message.innerHTML = "Message";
+
+                buttons.append(viewProfile, message);
+                bgDiv.append(buttons);
+                peopleDiv.append(bgDiv);
+            }
+        }
+    </script>
+
+    </body>
+    </html>
+    {% include "utils/footer.html" %}
+{% endblock %}

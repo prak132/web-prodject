@@ -1,0 +1,43 @@
+{
+    "name": "projectnebulus",
+    "version": "0.1.0-beta",
+    "description": "Project Nebulus - Learning, All In One",
+    "author": "@projectnebulus",
+    "scripts": {
+        "format": "prettier --write \"**/*.{js,json,css}\"",
+        "format:py": "isort . && black ."
+    },
+    "keywords": [],
+    "license": "MPL-2.0",
+    "dependencies": {
+        "@picmo/renderer-twemoji": "^5.2.0",
+        "dompurify": "^2.3.8",
+        "flowbite": "^1.4.7",
+        "html-metadata-parser": "^2.0.4",
+        "npx": "^10.2.2",
+        "picmo": "^5.2.0",
+        "postcss-cli": "^9.1.0",
+        "prettier": "^2.7.1",
+        "socket.io-client": "^4.5.1",
+        "twemoji": "^14.0.2"
+    },
+    "devDependencies": {
+        "@kevinzma/prettier-config": "^1.1.0",
+        "@tailwindcss/aspect-ratio": "^0.4.0",
+        "@tailwindcss/forms": "^0.5.2",
+        "@tailwindcss/line-clamp": "^0.4.0",
+        "@tailwindcss/typography": "^0.5.0-alpha.3",
+        "autoprefixer": "^10.4.7",
+        "postcss": "^8.4.12",
+        "tailwindcss": "^3.1.4"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ProjectNebulus/ProjectNebulus.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ProjectNebulus/ProjectNebulus/issues"
+    },
+    "homepage": "https://github.com/ProjectNebulus/ProjectNebulus#readme",
+    "prettier": "@kevinzma/prettier-config"
+}
