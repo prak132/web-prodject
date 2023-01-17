@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block main %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+    <nav class="flex py-3 px-5 text-gray-700 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+         aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-3 -mx-1" id="breadcrumy">
+            <li class="inline-flex items-center">
+                <a onclick="location.reload();" class="inline-flex items-center text-sm font-medium text-gray-700
+                    hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="mr-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                    </svg>
+                    Home
+                </a>
+            </li>
+        </ol>
+    </nav>
+    <div style="margin-left: 10px; width: 98%; float: left;" id="documentPage">
+        <div style="width:70%;float:left;">
+            {% if course.documents|length == 0 and course.folders|length == 0 %}
+                <h1 class="mx-4 my-4 text-xl text-black dark:text-white">
+                    You have no documents or folders! Try creating one!
+                </h1>
+            {% endif %}
+
+            {% for folder in course.folders %}
+                <br>
+                <a class="truncate text-ellipsis overflow-hidden block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                    <p class="font-normal text-gray-700 dark:text-gray-400 whitespace-nowrap">
+                        <svg class="w-6 h-6 inline-block mr-2 -mt-1.5" fill="none"
+                             stroke="{{ folder.color }}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                        </svg>
+                        <span>{{ folder.name }}</span>
+                    </p>
+                </a>
+            {% endfor %}
+            {% for document in course.documents %}
+                <br>
+                <a onclick="document.getElementById('documentPage').style.display = 'none'; startFile('{{ document.name }}', siteName + '/getResource/{{ course.id }}/{{ document.id }}', {{ ("pdf" in document.url)|string|lower }});"
+                   class="truncate overflow-hidden block p-6 max-w-sm bg-white rounded-lg cursor-pointer border border-gray-200
+                    shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                   style="width: min-content">
+                    <p class="font-normal text-gray-700 dark:text-gray-400 whitespace-nowrap mr-2">
+                        <svg class="inline-block w-6 h-6 mr-2 -mt-1.5" fill="none"
+                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                        <span>{{ document.name }}</span></p>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="/static/js/tools/files.js"></script>
+{% endblock %}

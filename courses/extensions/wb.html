@@ -1,0 +1,167 @@
+{% extends "layout.html" %}
+{% block main %}
+    <!--
+    make a whiteboard.
+    when the user clicks and drags, they should be able to draw on the whiteboard.
+ -->
+    <html>
+    <head>
+        <title>Whiteboard</title>
+        <style>
+            html, body { width:100%; height:100%; } /* just to be sure these are full screen*/
+
+            canvas{
+                cursor: crosshair;
+            }
+        </style>
+    </head>
+    <body>
+    <!-- make a canvas element. width and height should be the same as the window. -->
+    <button id="lineWidth">Line Width</button>
+    <button id="clear"><i class="material-icons">delete</i></button>
+    <button id="save"><i class="material-icons">download</i></button>
+    <button value="pen" id="pen"><i class="material-icons">edit</i></button>
+    <button value="eraser" id="eraser"><i class="material-icons">backspace</i></button>
+    <button value="insert-text" id="insert-text"><i class="material-icons">keyboard</i></button>
+    <input type="color" id="color" value="#000000">
+    <canvas id="whiteboard" width="100" height="1000"></canvas>
+    <script>
+        var canvas = document.getElementById('whiteboard');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight-50;
+        var ctx = canvas.getContext('2d');
+        var mouseDown = false;
+        var lastX = 0;
+        var lastY = 0;
+        var color = 'black';
+        var lineWidth = 1;
+        canvas.addEventListener('mousedown', function(e) {
+            mouseDown = true;
+            lastX = e.offsetX;
+            lastY = e.offsetY;
+        });
+        canvas.addEventListener('mouseup', function(e) {
+            mouseDown = false;
+        });
+        canvas.addEventListener('mousemove', function(e) {
+            if (mouseDown) {
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.strokeStyle = color;
+                ctx.lineWidth = lineWidth;
+                ctx.stroke();
+                lastX = e.offsetX;
+                lastY = e.offsetY;
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode == 88) {
+                e.preventDefault();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        });
+
+        //command-l to change the line width
+        document.addEventListener('keydown', function(e) {
+            e.preventDefault();
+            if (e.keyCode == 76) {
+                lineWidth = lineWidth + 1;
+                if (lineWidth > 10) {
+                    lineWidth = 1;
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode == 67) {
+                e.preventDefault();
+                color = prompt('What color would you like to use?');
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode == 87) {
+                e.preventDefault();
+                lineWidth = prompt('What line width would you like to use?');
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode == 83) {
+                e.preventDefault();
+                var data = canvas.toDataURL();
+                var link = document.createElement('a');
+                link.download = prompt('What would you like to name the image?');
+                if (link.download != null && link.download != '' && link.download != ' ') {
+                    link.href = data;
+                    link.click();
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode == 69) {
+                e.preventDefault();
+                color = 'white';
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode == 72) {
+                e.preventDefault();
+                alert('option+x: clear the canvas\ncommand+c: change the color\ncommand+w: change the line width\ncommand+s: save the canvas as an image');
+            }
+        });
+
+        document.getElementById('lineWidth').addEventListener('click', function(e) {
+            lineWidth = prompt('What line width would you like to use?');
+            color = document.getElementById('color').value;
+        });
+
+        document.getElementById('clear').addEventListener('click', function(e) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        document.getElementById('save').addEventListener('click', function(e) {
+            var data = canvas.toDataURL();
+            var link = document.createElement('a');
+            link.download = prompt('What would you like to name the image?');
+            if (link.download != null) {
+                link.href = data;
+                link.click();
+            }
+        });
+
+        document.getElementById('color').addEventListener('change', function(e) {
+            color = document.getElementById('color').value;
+        });
+
+
+        document.getElementById('pen').addEventListener('click', function(e) {
+            color = 'black';
+        });
+
+        document.getElementById('eraser').addEventListener('click', function(e) {
+            color = 'white';
+        });
+
+        document.getElementById('insert-text').addEventListener('click', function(e) {
+            var text = prompt('What would you like to write?');
+            ctx.font = '30px Arial';
+            ctx.fillStyle = color;
+            //add an event listener to the canvas to listen for mouse clicks. let the user click once. after one click, end the event listener.
+            canvas.addEventListener('click', function(e) {
+                ctx.fillText(text, e.offsetX, e.offsetY);
+                canvas.removeEventListener('click', function(e) {
+                    ctx.fillText(text, e.offsetX, e.offsetY);
+                    text = '';
+                });
+            });
+        });
+
+    </script>
+    </body>
+    </html>
+{% endblock %}

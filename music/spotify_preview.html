@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block main %}
+    <div style="margin:20px;">
+        <title>{{ i["name"] }} | {{ i["author"] }}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+        <link href={{ "/static/css/style.css?version=" ~ range(1, 100000000) | random }} rel="stylesheet" id='swap'/>
+        <link href="/static/css/main.css" rel="stylesheet"/>
+        <meta property="og:title" content=
+                '{{ i["name"] }}'/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content="http://my.site.com"/>
+        <meta property="og:image" content={{ i["image"] }}/>
+        <meta property="og:description" content='Listen to {{ i["name"] }} by {{ i["author"] }} on Nebulus!'/>
+        <meta name="theme-color" content=" #1DB954">
+        <iframe src="https://open.spotify.com/embed/track/{{ i['code'] }}?theme=0" width="50%" height="50%"
+                frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        <h1 class="text-4xl text-black dark:text-white">{{ i["name"] }}</h1>
+        <a href={{ i["author_url"] }}><h2 class="text-sky-500 hover:underline;">{{ i["author"] }}</h2></a><br>
+        <a href='https://open.spotify.com/track/{{ i["code"] }}'>
+            <button style="padding:10px;font-size:24px; background:#1DB954;color:white;border-style:none;border-radius:5px;margin-right:10px;">
+                Watch on Spotify <i class="fa fa-spotify"></i></button>
+        </a>
+
+
+    </div>
+{% endblock %}

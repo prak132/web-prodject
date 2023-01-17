@@ -1,0 +1,103 @@
+<!--Extend with Jinja!-->
+{% extends "layout.html" %}
+{% block main %}
+    {% include "utils/navbar.html" %}
+    <div style="overflow: hidden;" class="dark:scroll">
+        <aside class="w-64" aria-label="Sidebar" style="height: calc(100%);float:left;">
+            <div class="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800" style="height: calc(100%">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#"
+                           class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                 fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                            </svg>
+                            <span class="ml-3">Applications</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"
+                           class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                 fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                            </svg>
+                            <span class="flex-1 ml-3 whitespace-nowrap">API Docs</span>
+                        </a>
+                    </li>
+
+                </ul>
+                <br>
+                <hr>
+                <br>
+                <div class="flex flex-col overflow-x-auto sm:-mx-6 lg:-mx-8 inline-block py-2 min-w-full sm:px-6 lg:px-8 overflow-hidden shadow-md sm:rounded-lg">
+                    <table class="min-w-full">
+                        <tbody>
+                        <!-- Product 1 -->
+                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-700 bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Unnamed Project 1
+                            </td>
+
+                        </tr>
+                        <!-- Product 1 -->
+                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-700 bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Unnamed Project 1
+                            </td>
+
+                        </tr>
+                        <!-- Product 2 -->
+                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-700 bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Token: D8FNEISMFBEO9
+                            </td>
+
+                        </tr>
+                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-700 bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Token: F7FNOISKFBEXB
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </aside>
+        <div style="float:left;width:calc(100% - 260px);">
+            <div style="float:left;margin:20px;"
+                 class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <a href="#">
+                    <img class="rounded-t-lg w-24 h-24"
+                         src="http://cdn.shopify.com/s/files/1/1061/1924/products/The_Sun_Emoji_grande.png?v=1571606063"
+                         alt="Sun"/>
+                </a>
+                <div class="p-5">
+                    <a href="#">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Unnamed Project
+                            1</h5>
+                    </a>
+
+                </div>
+            </div>
+            <div style="float:left; margin:20px;"
+                 class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <a href="#">
+                    <img class="rounded-t-lg w-24 h-24" src="https://hotemoji.com/images/dl/u/herb-emoji-by-google.png"
+                         alt="Herb"/>
+                </a>
+                <div class="p-5">
+                    <a href="#">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Unnamed Project
+                            2</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "utils/footer.html" %}
+{% endblock %}

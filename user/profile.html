@@ -1,0 +1,100 @@
+<!--Extend with Jinja!-->
+{% extends "layout.html" %}
+{% block main %}
+    {% include "utils/navbar.html" %}
+    <script src="/static/js/user/profile.js"></script>
+    <h1 class="dark:text-white text-4xl noselect">Your Profile</h1><br>
+    <div style="margin:20px;"
+         class="w-full md:w-1/2 bg-white/75 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800/75 dark:border-gray-700">
+        <div class="flex justify-end px-4 pt-4">
+            <button class="text-black dark:text-white" id="dropdownButton" data-dropdown-toggle="dropdown">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+                </svg>
+            </button>
+            <!-- Dropdown menu -->
+            <div id="dropdown"
+                 class="hidden z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                <ul class="py-1" aria-labelledby="dropdownButton">
+                    <li>
+                        <a href="#"
+                           class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                           class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export
+                            Data</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                           class="block py-2 px-4 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="flex flex-col items-center pb-10">
+
+            <div class="grid grid-cols-2 gap-4">
+                <div style="text-align:right;">
+                    <button
+                            class="rounded-full border-gray-300 border-none w-24 h-24
+                            {% if "black" in avatar %} bg-gray-300
+                            {% else %} dark:bg-gray-900 dark:hover:bg-gray-800 {% endif %}">
+                        <logo image="{{ avatar }}" no-revert class="h-16 mx-auto my-auto "></logo>
+                    </button>
+                </div>
+                <div>
+                    <h3 class="mb-1 text-3xl font-medium text-gray-900 dark:text-white">{{ session.get('username') }}</h3>
+                    <span class="text-xl text-gray-500 dark:text-gray-400">{{ session.get('email') }}</span>
+                </div>
+            </div>
+            <div class="flex mt-4 space-x-3 lg:mt-6">
+                <a href="/settings"
+                   class="noselect inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Settings</a>
+                <a href="/dashboard"
+                   class="noselect inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-800">Dashboard</a>
+            </div>
+            <br><br>
+            <h2 class="dark:text-white text-4xl noselect">Spotify</h2><br>
+            <p><span
+                    style="display:grid; grid-auto-flow: column; align-content: center; justify-content: center;; "
+                    class="noselect dark:text-white" id="song"><i
+                    style="display:inline-block; color:greenyellow; margin-right:10px;" class="fab fa-spotify"></i> Loading...</span>
+            </p>
+            <br>
+        </div>
+
+    </div>
+
+    <div style="height:80%;" id="lyricModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto
+     overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="modalheader flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        <span id="songname"></span> Lyrics
+                    </h3>
+                    <button type="button"
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-toggle="defaultModal">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div style="height:80%;overflow-y:scroll;" class="p-6 space-y-6">
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" id="lyricshere">
+                        Loading...
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "utils/footer.html" %}
+{% endblock %}  

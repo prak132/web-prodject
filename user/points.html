@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+{% block main %}
+{% include "utils/navbar.html" %}
+<br>
+<a href="#" class="block p-6 bg-white/75 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800/75 dark:border-gray-700"
+   style="margin:10px;width:100%;">
+    <div class="flex justify-between mb-1">
+        <span class="text-4xl text-base font-medium text-yellow-400">Nebulus Points <span
+                class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">Beta</span></span>
+        <span class="text-sm font-medium text-yellow-400">{{points}} Points Earned | {{points//10}}% to 1000 Points</span>
+    </div>
+    <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+        <div class="bg-yellow-400 h-2.5 rounded-full" style="width: {{points//10}}%"></div>
+    </div>
+</a>
+<br>
+<a href="#"
+   class="dark:text-white text-black block p-6 bg-white/75 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800/75 dark:border-gray-700"
+   style="float:left;margin:10px;width:calc(50% - 20px);height:300px;">
+    <h1 class="text-2xl text-black dark:text-white">How to Use Nebulus Points</h1>
+    <svg style="display:inline-block;" class="w-6 h-6" fill="green" viewBox="0 0 20 20"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd">
+        </path>
+    </svg>
+    Unlock New Features<br>
+    <svg style="display:inline-block;" class="w-6 h-6" fill="green" viewBox="0 0 20 20"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd">
+        </path>
+    </svg>
+
+
+</a>
+<a href="#"
+   class="dark:text-white text-black block p-6 bg-white/75 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800/75 dark:border-gray-700"
+   style="height:300px;float:left;margin:10px;width:calc(50% - 20px);">
+    <h1 class="text-2xl text-black dark:text-white">How to Earn Nebulus Points</h1>
+    <svg style="display:inline-block;" class="w-6 h-6" fill="green" viewBox="0 0 20 20"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd">
+        </path>
+    </svg>
+    Refer Nebulus to Friends<br>
+    <svg style="display:inline-block;" class="w-6 h-6" fill="green" viewBox="0 0 20 20"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd">
+        </path>
+    </svg>
+    Buy Points<br>
+    <svg style="display:inline-block;" class="w-6 h-6" fill="green" viewBox="0 0 20 20"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd">
+        </path>
+    </svg>
+    Reports Bugs<br>
+    <svg style="display:inline-block;" class="w-6 h-6" fill="green" viewBox="0 0 20 20"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd">
+        </path>
+    </svg>
+    Suggest Features<br>
+    <svg style="display:inline-block;" class="w-6 h-6" fill="green" viewBox="0 0 20 20"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd">
+        </path>
+    </svg>
+    Participate in Promotions<br>
+    <svg style="display:inline-block;" class="w-6 h-6" fill="green" viewBox="0 0 20 20"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd">
+        </path>
+    </svg>
+    Early Supporter<br>
+
+    <svg style="display:inline-block;" class="w-6 h-6" fill="red" viewBox="0 0 20 20"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clip-rule="evenodd">
+        </path>
+    </svg>
+    Using Nebulus for a Long Time<br>
+    <svg style="display:inline-block;" class="w-6 h-6" fill="red" viewBox="0 0 20 20"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clip-rule="evenodd">
+        </path>
+    </svg>
+    Beg for Them<br>
+
+</a>
+
+{% endblock %}

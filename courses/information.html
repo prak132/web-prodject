@@ -1,0 +1,20 @@
+<!--Extend with Jinja!-->
+{% extends "layout.html" %}
+{% block main %}
+<style>
+.material-icons{
+    margin:10px;
+}
+</style>
+<div style="margin-left: 20px; margin-top: 20px">
+    <p class="text-3xl dark:text-white"><i class="material-icons">badge</i> <span class="text-gray-400">{{course.name}}</span></p>
+    <p class="text-3xl dark:text-white"><i class="material-icons">face</i> <span class="text-gray-400">{{course.teacher}}</span></p>
+    <p class="text-3xl dark:text-white"><i class="material-icons">dashboard</i> <span class="text-gray-400">{{course.template}}</span></p>
+    <p class="text-3xl dark:text-white"><i class="material-icons">publish</i><span class="text-gray-400">{{course.imported_from}}</span></p>
+    <p class="text-3xl dark:text-white"><i class="material-icons">campaign</i> <span class="text-gray-400">{{course.announcements | length}} Announcements</span></p>
+    <p class="text-3xl dark:text-white"><i class="material-icons">folder</i><span class="text-gray-400">{{course.folders | length}} Folders</span></p>
+    <p class="text-3xl dark:text-white"><i class="material-icons">description</i><span class="text-gray-400">{{course.documents | length}} Documents</span></p>
+    <p class="text-3xl dark:text-white"><i class="material-icons">bookmark</i><span class="text-gray-400">{{course.announcements | length}} Textbooks</span></p>
+</div>
+
+{% endblock %}

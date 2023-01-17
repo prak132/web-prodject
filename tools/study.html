@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+{% block main %}
+
+    {% include "utils/navbar.html" %}
+    <style>
+        .within {
+            background: transparent;
+            width: 5ch;
+            outline: none;
+            border: none;
+        }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+            text-align: right;
+        }
+
+        #time input, #addTime {
+            background: transparent;
+            width: 4ch;
+            outline: none;
+            border: none;
+        }
+
+        #time span {
+            margin-left: -0.5rem;
+            margin-top: -0.5rem;
+        }
+
+        #start:disabled {
+            background: #3F83F8;
+            color: lightgray;
+        }
+
+        -webkit-datetime-edit-ampm-field {
+            display: none;
+        }
+
+        input[type=time]::-webkit-clear-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -o-appearance: none;
+            -ms-appearance: none;
+            appearance: none;
+            margin: -10px;
+        }
+
+    </style>
+    <div style="margin-top: 10%; height: 25rem; width: 30rem;" class="block p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700
+     text-center mx-auto my-auto relative">
+        <button class="material-icons text-gray-500 dark:text-gray-400 absolute top-5 right-5 p-2 hover:bg-gray-200
+         dark:hover:bg-gray-500 rounded-lg" id="popup">open_in_new
+        </button>
+        <div id="config">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">New Study Session</h5>
+            <p class="font-normal text-gray-700 dark:text-gray-400">Create your first Study Session!</p>
+            <div class="mt-4 mb-6">
+                <label for="name" class="text-sm font-medium text-gray-900 dark:text-gray-300">
+                    Study Session Name</label>
+                <input id="name" name="study-session-name" maxlength="50" placeholder="Can be left blank"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+                           focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 text-center mt-3
+                           dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+            <div class="mb-6">
+                <label for="time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Study
+                    Time</label>
+                <div id="time" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                     focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
+                      dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <input type="number" class="ml-1 text-2xl" max="99" min="0" placeholder="00"/>
+                    <span>hours</span>
+                    <input type="number" class="ml-4 text-2xl" max="59" min="0" placeholder="00"/>
+                    <span>minutes</span>
+                    <input type="number" class="ml-4 text-2xl" max="59" min="0" placeholder="10"/>
+                    <span>seconds</span>
+                </div>
+            </div>
+            <div class="text-center">
+                <button id="start" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+                     focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center
+                     dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Start Study Session
+                </button>
+            </div>
+        </div>
+        <div id="timer" class="hidden text-center">
+            <h5 class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white" id="timerDisplay">0:00</h5>
+            <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-800 dark:text-gray-200" id="progress">
+                left in your <span id="timerName" class="text-red-500">Homework</span> timer.</h5>
+            <p class="mb-2 text-lg tracking-tight text-gray-900 dark:text-gray-200" id="message">Keep It Up!</p>
+
+            <button class="p-2 mt-8 hover:bg-gray-200 dark:hover:bg-gray-500 text-black dark:text-white rounded hidden">
+                + 1 minutes
+            </button>
+
+            <div class="absolute bottom-0 left-0 text-center w-full mb-8 text-black dark:text-white">
+                <button id="pause"
+                        class="px-4 py-2 border border-2 rounded-lg hover:text-gray-600 dark:hover:text-gray-300 mb-2"></button>
+                <button id="cancel" class="px-4 py-2 rounded-lg border border-2 border-gray-300 dark:border-gray-700
+                 hover:bg-gray-200 dark:hover:bg-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
+                    Cancel
+                </button>
+            </div>
+        </div>
+        <div id="timerEnd" class="hidden text-center text-black dark:text-white">
+            <h5 class="text-3xl" style="color:greenyellow;">Your timer has ended!</h5>
+            <p class="text-gray-500 dark:text-gray-400 my-2">
+                Break time!
+                <br><br>
+                Or, if you want to, you could...
+            </p>
+            <button id="restart" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+                focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center
+                dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-2">
+                Start another session
+            </button>
+        </div>
+    </div>
+
+    <span id="updateVariable"></span>
+    <script src="/static/js/tools/study.js"></script>
+{% endblock %}

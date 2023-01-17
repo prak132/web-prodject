@@ -1,0 +1,63 @@
+<!--Extend with Jinja!-->
+{% extends "layout.html" %}
+{% block main %}
+    {% if course.template != "Coding" %}
+        <h1 class="text-4xl text-black dark:text-white">Learning is not available to the course template
+            "{{ course.template }}" yet!</h1>
+    {% endif %}
+    {% if course.template == "Coding" %}
+        <h1 class="text-4xl text-black dark:text-white">Learn to Code <span
+                class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">Beta</span>
+        </h1>
+        <ol class="relative border-l border-gray-200 dark:border-gray-700" style="margin-top:20px;margin-left:20px;">
+            <li class="mb-10 ml-4">
+                <div class="absolute w-6 h-6 bg-gray-200 rounded-full -left-3 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+                <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Course 1</time>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Python Programming</h3>
+                <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">Learn how to code in Python!</p>
+                <a href="#"
+                   class="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Go
+                    to Lesson
+                    <svg class="ml-2 w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="mb-10 ml-4">
+                <div class="absolute w-6 h-6 bg-gray-200 rounded-full -left-3 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+                <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Course 2</time>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Programming in Java</h3>
+                <p class="text-base font-normal text-gray-500 dark:text-gray-400">Learn how to code in Java!</p>
+                <a href="#"
+                   class="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Go
+                    to Lesson
+                    <svg class="ml-2 w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="ml-4">
+                <div class="absolute w-6 h-6 bg-gray-200 rounded-full -left-3 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+                <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Course 3</time>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Programming in C++</h3>
+                <p class="text-base font-normal text-gray-500 dark:text-gray-400">Learn how to code in C++</p>
+                <a href="#"
+                   class="inline-flex items-center py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Go
+                    to Lesson
+                    <svg class="ml-2 w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </li>
+        </ol>
+    {% endif %}
+{% endblock %}

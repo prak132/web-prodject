@@ -1,0 +1,829 @@
+{% extends "layout.html" %}
+{% block main %}
+    {% include "utils/navbar.html" %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {% for font in fonts %}
+        <link href="https://fonts.googleapis.com/css2?family={{ font.replace(" ", "+") }}&display=swap"
+              rel="stylesheet">
+
+    {% endfor %}
+    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        h1 {
+            display: block;
+            font-size: 2em;
+            margin-block-start: 0.67em;
+            margin-block-end: 0.67em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-block-start: 0.67em;
+            margin-block-end: 0.67em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+            font-weight: bold;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            margin-block-start: 0.67em;
+            margin-block-end: 0.67em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+            font-weight: bold;
+        }
+
+        h4 {
+            font-size: 1.1em;
+            margin-block-start: 0.67em;
+            margin-block-end: 0.67em;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+            font-weight: bold;
+        }
+
+        #editor ol, menu {
+            list-style: decimal !important;
+        }
+
+        #editor ul, menu {
+            list-style: disc !important;
+        }
+
+        input[type="color"] {
+            -webkit-appearance: none;
+            border: none;
+            width: 60px;
+            height: 60px;
+            margin: auto;
+            border-radius: 10px;
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: none;
+        }
+
+        .twemoji {
+            display: inline-block;
+            height: 16px;
+        }
+
+        a {
+            cursor: pointer !important;
+        }
+
+        @media print {
+
+            @page {
+                margin: 0;
+            }
+
+            body {
+                margin: 1.6cm;
+            }
+
+            nav {
+                display: none;
+            }
+
+            #part1 {
+                display: none !important;
+            }
+
+            #part2 {
+                display: none !important;
+            }
+
+            #part3 {
+                border: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+
+            }
+
+            iframe {
+                display: none;
+            }
+
+            #editor {
+                position: absolute;
+                width: 100%;
+                filter: invert(0);
+                background-color: white;
+            }
+
+        }
+
+        /* width */
+        #part3::-webkit-scrollbar {
+            width: 13px !important;
+        }
+
+        /* Track */
+        #part3::-webkit-scrollbar-track {
+            background: #f1f1f1 !important;
+        }
+
+        /* Handle */
+        #part3::-webkit-scrollbar-thumb {
+            background: black !important;
+            border-radius: 10px !important;
+        }
+
+        /* Handle on hover */
+        #part3::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        #editor {
+            font-family: 'Arial' !important;
+            height: auto;
+            outline: none;
+            background: white;
+            color: black;
+            width: 60%;
+            margin: 30px auto auto;
+            padding: 70px !important;
+            overflow-wrap: break-word
+            height: calc(100% - 80px);
+        !important;
+            word-wrap: break-word !important;
+            overflow: wrap !important;
+        }
+
+
+        input[type=email]:disabled {
+            border-color: #424040;
+            color: #424040;
+            background: rgba(66, 64, 64, 0.2);
+        }
+
+        input[type=password]:disabled {
+            border-color: #424040;
+            color: #424040;
+            background: rgba(66, 64, 64, 0.2);
+        }
+
+        input[type=number]:disabled {
+            border-color: #424040;
+            color: #424040;
+            background: rgba(66, 64, 64, 0.2);
+        }
+
+        input[type=text]:disabled {
+            border-color: #424040;
+            color: #424040;
+            background: rgba(66, 64, 64, 0.2);
+        }
+
+        input[type=email] {
+            height: 2.3em;
+            background: transparent;
+            color: white;
+            width: 70%;
+            border-style: none none solid none;
+            border-width: 2px;
+            border-color: white;
+            outline: none;
+            font-size: 1em;
+        }
+
+        input[type=password] {
+            height: 2.3em;
+            background: transparent;
+            color: white;
+            width: 70%;
+            border-style: none none solid none;
+            border-width: 2px;
+            border-color: white;
+            outline: none;
+            font-size: 1em;
+        }
+
+        input[type=number] {
+            height: 2.3em;
+            background: transparent;
+            color: white;
+            width: 70%;
+            border-style: none none solid none;
+            border-width: 2px;
+            border-color: white;
+            outline: none;
+            font-size: 1em;
+        }
+
+        input[type=password] {
+            height: 2.3em;
+            background: transparent;
+            color: white;
+            width: 70%;
+            border-style: none none solid none;
+            border-width: 2px;
+            border-color: white;
+            outline: none;
+            font-size: 1em;
+        }
+
+        input[type=text] {
+            height: 2.3em;
+            background: transparent;
+            color: white;
+            width: 70%;
+            border-style: none none solid none;
+            border-width: 2px;
+            border-color: white;
+            outline: none;
+            font-size: 1em;
+        }
+
+        .button {
+            float: left;
+            padding: 10px;
+            font-size: 1.5em;
+            border-radius: 10px;
+            background: #009dffff;
+            color: white;
+        }
+
+        .outerDiv {
+            float: left;
+            padding: 30px;
+            width: 50px;
+            height: 100px;
+        }
+
+        .icon {
+            font-size: 3em;
+            background-color: rgba(0, 157, 255, 0.2);
+            color: rgb(0, 157, 255);
+            border-radius: 50%;
+            padding: 10px;
+        }
+
+        .divtext {
+            color: rgb(0, 157, 255);
+        }
+
+        .textbook {
+            background: #FEFEFE;
+            border-radius: 25px;
+            color: black;
+            width: 400px;
+            height: 550px;
+            padding: 20px;
+            margin: 20px;
+            float: left;
+        }
+
+        .textbook-image {
+            height: 300px;
+        }
+
+        .textbook-button {
+            border-radius: 15px;
+            color: white;
+            background: #00bfff;
+            font-size: 1.5em;
+            border-style: none;
+            padding: 10px;
+        }
+
+        .textbook-button:hover {
+            background: #067094;
+        }
+
+        .bar {
+            padding-right: 20px;
+            padding-left: 20px;
+            padding-top: 20px;
+            height: 50px;
+            border-style: solid;
+            border-color: grey;
+            border-width: 1px;
+            border-radius: 10px;
+            background: transparent;
+            outline: none;
+            color: white;
+        }
+
+        div.editable {
+            width: 300px;
+            height: 200px;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+    </style>
+    <script>
+        function changeHeight() {
+            if (localStorage.getItem("color-theme") === "dark") {
+                document.getElementById("editor").style.background = "#EEE7D8";
+                document.getElementById("editor").style.filter = "invert(1)";
+            }
+            else {
+                document.getElementById("editor").style.background = "white";
+                document.getElementById("editor").style.filter = "invert(0)";
+            }
+            let w = document.getElementById("editor").offsetWidth / 8.5 * 11;
+            document.getElementById("editor").style.minHeight = w + "px";
+        }
+
+        function changeFont(num) {
+            document.execCommand('fontSize', false, num);
+            document.getElementById("dropdownFonts1").innerText = num;
+            document.execCommand('fontSize', false, num);
+            //document.getElementById("dropdownFonts1").onclick = `changeFont(${num})`;
+            document.getElementById("dropdownFonts1").onclick = () => changeFont(num);
+        }
+
+        function changeFontName(name) {
+            document.getElementById("dropdownFont1").innerText = name;
+            let resp = document.execCommand('fontName', false, name);
+            document.getElementById("dropdownFont1").onclick = () => changeFontName(name);
+        }
+
+        function changeHeader(name) {
+            document.getElementById("dropdownHeader2").innerText = name;
+            document.execCommand('insertHTML', false, `<${name}>` + window.getSelection().toString() + `</${name}>`)
+            {#let resp = document.execCommand('heading', false, name);#}
+            document.getElementById("dropdownHeader2").onclick = () => changeHeader(name);
+        }
+
+        function change(id) {
+            if (id === "b") {
+                document.execCommand('bold');
+            }
+            if (id === "i") {
+                document.execCommand('italic');
+            }
+            if (id === "u") {
+                document.execCommand('underline');
+            }
+            if (id === "c") {
+                document.execCommand('foreColor', false, document.getElementById("changediscolor").style.color);
+            }
+            if (id === "h") {
+                document.execCommand('hiliteColor', false, document.getElementById("changediscolor2").style.color);
+            }
+            if (id === "al") {
+                document.execCommand('justifyLeft');
+            }
+            if (id === "ar") {
+                document.execCommand('justifyRight');
+            }
+            if (id === "ac") {
+                document.execCommand('justifyCenter');
+            }
+            if (id === "af") {
+                document.execCommand('justifyFull');
+            }
+            if (id === "lb") {
+                document.execCommand('insertUnorderedList');
+            }
+            if (id === "ln") {
+                document.execCommand('insertOrderedList');
+            }
+            if (id === "redo") {
+                document.execCommand('redo');
+            }
+            if (id === "undo") {
+                document.execCommand('undo');
+            }
+            document.getElementById("editor").focus();
+            document.getElementById("editor").focus();
+        }
+
+        function fullscreen() {
+            let css = "width:100%;height:100%;z-index:50;position: absolute; top: 0; left: 0;";
+            let element = document.getElementById("daform");//("editor");
+            if (element.style.height !== "100%")
+                element.style.cssText = css;
+            else
+                element.style.cssText = "height: calc(100% - 80px);";
+        }
+
+        function parse() {
+            var div = document.getElementById("editor");
+
+            twemoji.parse(div, {
+                ext: ".svg",          // default ".png"
+                className: "twemoji",    // default "emoji"
+                size: "36x36",  // default "72x72"
+                folder: "svg"
+            });
+
+        }
+
+        changeHeight();
+        parse();
+
+        function color() {
+            let dacolor = document.getElementById("colorpicker").value;
+            //document.getElementsByClassName("buttonSelect")[10].style.background = dacolor;
+            document.getElementById("changediscolor").style.color = dacolor;
+            document.execCommand('foreColor', false, dacolor);
+        }
+
+        function hilite() {
+            let dacolor = document.getElementById("colorpicker2").value;
+            //document.getElementsByClassName("buttonSelect")[10].style.background = dacolor;
+            document.getElementById("changediscolor2").style.color = dacolor;
+            document.execCommand('hiliteColor', false, dacolor);
+        }
+
+        document.getElementById("colorpicker").onchange = function () {
+            color();
+
+        }
+    </script>
+    <script>
+        setInterval(parse, 100);
+        setInterval(changeHeight, 100);
+        $(document).ready(function () {
+            var handleDrag = function (e) {
+                //kill any default behavior
+                e.stopPropagation();
+                e.preventDefault();
+            };
+            var handleDrop = function (e) {
+                //kill any default behavior
+                e.stopPropagation();
+                e.preventDefault();
+                //get x and y coordinates of the dropped item
+                x = e.clientX;
+                y = e.clientY;
+                //drops are treated as multiple files. Only dealing with single files right now, so assume its the first object you're interested in
+                var file = e.dataTransfer.files[0];
+                //don't try to mess with non-image files
+                if (file.type.match('image.*')) {
+                    //then we have an image,
+
+                    //we have a file handle, need to read it with file reader!
+                    var reader = new FileReader();
+
+                    // Closure to capture the file information.
+                    reader.onload = (function (theFile) {
+                        //get the data uri
+                        var dataURI = theFile.target.result;
+                        //make a new image element with the dataURI as the source
+                        var img = document.createElement("img");
+                        img.src = dataURI;
+
+                        //Insert the image at the carat
+
+                        // Try the standards-based way first. This works in FF
+                        if (document.caretPositionFromPoint) {
+                            var pos = document.caretPositionFromPoint(x, y);
+                            range = document.createRange();
+                            range.setStart(pos.offsetNode, pos.offset);
+                            range.collapse();
+                            range.insertNode(img);
+                        }
+                        // Next, the WebKit way. This works in Chrome.
+                        else if (document.caretRangeFromPoint) {
+                            range = document.caretRangeFromPoint(x, y);
+                            range.insertNode(img);
+                        }
+                        else {
+                            //not supporting IE right now.
+                            console.log('could not find carat');
+                        }
+
+
+                    });
+                    //this reads in the file, and the onload event triggers, which adds the image to the div at the carat
+                    reader.readAsDataURL(file);
+                }
+            };
+
+            var dropZone = document.getElementById('editor');
+            dropZone.addEventListener('dragover', handleDrag, false);
+            dropZone.addEventListener('drop', handleDrop, false);
+        });
+    </script>
+    <div style="margin:auto;width:90%;">
+        <form style="height: calc(100% - 80px);">
+            <div class="mb-4 w-full bg-gray-100 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+                <div id="part1" class="py-2 px-3 ">
+                    <div class="flex w-1/3">
+                        <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border
+                         border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                            <i class="material-icons">article</i>
+                        </span>
+                        <input type="text" id="name"
+                               class="rounded-none rounded-r-lg bg-gray-50 text-gray-900 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-gray-800 dark:text-white"
+                               placeholder="Untitled Document" style="border-style:none;">
+                    </div>
+                    <p style="float:right;margin-top:-30px;" class="text-xl dark:text-white">
+                        <button type="button" style="margin:5px;"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            Access
+                        </button>
+                        Nebulus Documents
+                    </p>
+                </div>
+                <hr style="margin-top:20px; border: 1px solid gray;">
+                <div id="part2" class="flex justify-between items-center py-2 px-3 border-b dark:border-gray-600">
+                    <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
+                        <div class="flex items-center space-x-1 sm:pr-4">
+                            <button onclick="change('undo');" type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect'><i class="material-icons">undo</i></span>
+                            </button>
+                            <button onclick="change('redo');" type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect'><i class="material-icons">redo</i></span>
+                            </button>
+                            <button onclick="window.print();return false;" type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect'><i class="material-icons">print</i></span>
+                            </button>
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect'><i class="material-icons">download</i></span>
+                            </button>
+
+                        </div>
+                        <div class="flex items-center space-x-1 sm:pr-4">
+
+                            <button id="dropdownHeader2" onclick="changeHeader('p')"
+                                    data-dropdown-toggle="dropdownHeader"
+                                    class="text-black dark:text-black dark:text-white font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+                                    type="button">Normal Text
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+
+                            <!-- Dropdown menu -->
+                            <div id="dropdownHeader"
+                                 class="z-10 hidden bg-gray-300 divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700">
+                                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="dropdownDefault">
+                                    <li onclick="changeHeader('p')">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Normal Text</span>
+                                    </li>
+                                    <li onclick="changeHeader('h1')">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Title</span>
+                                    </li>
+                                    <li onclick="changeHeader('h2')">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Subtitle</span>
+                                    </li>
+                                    <li onclick="changeHeader('h2')">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Heading 1</span>
+                                    </li>
+                                    <li onclick="changeHeader('h3')">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Heading 2</span>
+                                    </li>
+                                    <li onclick="changeHeader('h4')">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Heading 3</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect'><i class="material-icons">remove</i></span>
+                            </button>
+                            <button id="dropdownFonts1" onclick="changeFont(3);" data-dropdown-toggle="dropdownFonts"
+                                    class="text-black dark:text-black dark:text-white font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+                                    type="button">3
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div id="dropdownFonts"
+                                 class="z-10 hidden bg-gray-300 divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700">
+                                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="dropdownDefault">
+                                    <li onclick="changeFont(1);">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">1</span>
+                                    </li>
+                                    <li onclick="changeFont(2);">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">2</span>
+                                    </li>
+                                    <li onclick="changeFont(3);">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">3</span>
+                                    </li>
+                                    <li onclick="changeFont(4);">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">4</span>
+                                    </li>
+                                    <li onclick="changeFont(5);">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">5</span>
+                                    </li>
+                                    <li onclick="changeFont(6);">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">6</span>
+                                    </li>
+                                    <li onclick="changeFont(7);">
+                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">7</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect'><i class="material-icons">add</i></span>
+                            </button>
+
+                            <button onclick="changeFontName('Arial');" id="dropdownFont1"
+                                    data-dropdown-toggle="dropdownFont"
+                                    class="text-black dark:text-black dark:text-white font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+                                    type="button">Arial
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div id="dropdownFont"
+                                 class="z-10 hidden bg-gray-300 divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700">
+                                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="dropdownDefault">
+                                    {#                                    <li onclick="changeFontName('Arial');">#}
+                                    {#                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Arial</span>#}
+                                    {#                                    </li>#}
+                                    {#                                    <li onclick="changeFontName('Times New Roman');">#}
+                                    {#                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Times New Roman</span>#}
+                                    {#                                    </li>#}
+                                    {#                                    <li onclick="changeFontName('Comic Sans MS');">#}
+                                    {#                                        <span class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Comic Sans MS</span>#}
+                                    {#                                    </li>#}
+                                    {% for font in fonts %}
+                                        <li onclick="changeFontName('{{ font }}');">
+                                            <span style='font-family: "{{ font }}" !important;'
+                                                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ font }}</span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span id="b" onclick="change('b')" class='buttonSelect'><i class="material-icons">format_bold</i></span>
+                            </button>
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span id="i" onclick="change('i')" class='buttonSelect'><i class="material-icons">format_italic</i></span>
+                            </button>
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span id="u" onclick="change('u')" class='buttonSelect'><i class="material-icons">format_underlined</i></span>
+                            </button>
+                            <button data-dropdown-toggle="dropdownColor" type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span style='color:black;' class='buttonSelect' id="c" onclick="change('c')"><i
+                                        class="material-icons" id="changediscolor">format_color_text</i></span>
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div id="dropdownColor"
+                                 class="z-10 hidden bg-gray-300 divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700">
+                                <input id="colorpicker" onchange="color()" type="color" value="#000000"
+                                       style="background:transparent;margin:auto;padding:10px;">
+
+                            </div>
+
+                            <button data-dropdown-toggle="dropdownColor2" type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span style='color:white;' class='buttonSelect' id="h" onclick="change('h')"><i
+                                        class="material-icons" id="changediscolor2">edit</i></span>
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div id="dropdownColor2"
+                                 class="z-10 hidden bg-gray-300 divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700">
+                                <input id="colorpicker2" onchange="hilite()" type="color" value="#ffffff"
+                                       style="background:transparent;margin:auto;padding:10px;">
+
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap items-center space-x-1 sm:pl-4">
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect' onclick="change('al')"><i class="material-icons">format_align_left</i></span>
+                            </button>
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect' onclick="change('ar')"><i class="material-icons">format_align_right</i></span>
+                            </button>
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect' onclick="change('ac')"><i class="material-icons">format_align_center</i></span>
+                            </button>
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect' onclick="change('aj')"><i class="material-icons">format_align_justify</i></span>
+                            </button>
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect' onclick="change('lb')"><i class="material-icons">format_list_bulleted</i></span>
+                            </button>
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect' onclick="change('ln')"><i class="material-icons">format_list_numbered</i></span>
+                            </button>
+                            <button type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect' onclick="change('lc')"><i
+                                        class="material-icons">checklist</i></span>
+                            </button>
+                            <button data-dropdown-toggle="expand" type="button"
+                                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <span class='buttonSelect'><i class="material-icons">expand_more</i></span>
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div id="expand"
+                                 class="z-10 hidden bg-gray-300 divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700"
+                                 style="padding:20px; position: absolute; inset: 0 auto auto 0; margin: 0; transform: translate3d(1163px, 189px, 0px);">
+                                <button type="button"
+                                        class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <span class='buttonSelect'><i class="material-icons">table_chart</i></span>
+                                </button>
+                                <button type="button"
+                                        class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <span class='buttonSelect'><i class="material-icons">code</i></span>
+                                </button>
+                                <button type="button"
+                                        class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <span class='buttonSelect'><i class="material-icons">image</i></span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <button type="button" data-tooltip-target="tooltip-fullscreen" onclick="fullscreen();"
+                            class="p-2 text-gray-500 rounded cursor-pointer sm:ml-auto hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 012 0v1.586l2.293-2.293a1 1 0 111.414 1.414L6.414 15H8a1 1 0 010 2H4a1 1 0 01-1-1v-4zm13-1a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 010-2h1.586l-2.293-2.293a1 1 0 111.414-1.414L15 13.586V12a1 1 0 011-1z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <div id="tooltip-fullscreen" role="tooltip"
+                         class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-gray-700">
+                        Show full screen
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+                <div id="part3" class="py-2 px-4 bg-gray-200 rounded-b-lg dark:bg-gray-800"
+                     style="overflow-y:scroll;height:100%;">
+
+                    <label for="editor" class="sr-only">Publish post</label>
+                    <div contenteditable="true" tabindex="0" id="editor" class=" block px-0 w-full text-sm text-gray-800 bg-white
+                     border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                         style="min-height: 968px;">
+                        <h1 class="text-center">
+                            <span style="color: #ffdd00; font-family: Roboto Slab, Serif;">Welcome</span>
+                            <span style="font-family: Open Sans, serif">to</span><span
+                                style=" color: #bb00ff; font-family: Pacifico, serif"><i
+                                style="">Nebulus</i></span><span
+                                style="font-family: Open Sans, serif">&nbsp;Docs.</span></h1>
+                        <div>
+                            <h2>
+                                <span style="font-family: Open Sans, serif; color: #454545;"><u><i>Instructions</i></u></span>
+                            </h2>
+                        </div>
+                        <div>
+                            <ul>
+                                <li><span style="font-family: Open Sans, serif">Use the <b><u>Menu</u></b>&nbsp;above for formatting!</span>
+                                </li>
+                                <li>
+                                    <span style="font-family: Open Sans, serif">Keyboard Shortcuts: </span>
+                                    <span style="font-family: Times New Roman, serif">
+                                        <b><i>Command/Control + B</i></b>
+                                    </span>
+                                    <span style="font-family: Open Sans, serif">
+                                         for Bold,
+                                    </span>
+                                    <i>
+                                        <span style="font-family: Times New Roman, serif">Command/Control+ I</span>
+                                    </i>
+                                    <span style="font-family: Open Sans, serif">&nbsp;for Italics</span>
+                                </li>
+                                <li>
+                                    <span style="font-family: Open Sans, serif">
+                                        Help? Contact us at&nbsp;
+                                        <u><span style="color: #00fbff">https://discord.gg/QNgTSN2PBM</span></u>
+                                        !
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

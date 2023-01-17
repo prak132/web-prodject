@@ -1,0 +1,340 @@
+{% extends "layout.html" %}
+{% block main %}
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg h-full mx-4">
+        <div class="absolute w-full h-full bg-gray-100/75 dark:bg-gray-800/75 -z-10"></div>
+        <table id="table" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-200/75 dark:bg-gray-700/75 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Inbox
+                </th>
+                <th scope="col" class="px-6 py-3">
+
+                </th>
+                <th scope="col" class="px-6 py-3">
+
+                </th>
+                <th scope="col" class="px-6 py-3">
+
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <button class="material-icons p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-500"
+                            style="vertical-align: bottom; float: right"
+                            onclick="window.location.reload(); this.innerHTML = loadingIcon('1.5rem'); this.disabled = 'true'">
+                        refresh
+                    </button>
+                </th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+            {% for id, message in messages %}
+                <tr data-modal-toggle="thread_{{ id }}"
+                    class="{% if message["status"] == "read" %}bg-white/75 dark:bg-gray-800/75 {% else %} bg-gray-100/75 dark:bg-gray-700/75 {% endif %}border-b  dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        <div class="flex mb-5 -space-x-4">
+                            <img data-dropdown-toggle="userDropdown_a{{ id }}"
+                                 class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800 z-10"
+                                 src="{{ message["author"]["avatar"] }}" alt="">
+                            {% set author = message["author"] %}
+                            <div id="userDropdown_a{{ id }}" class="z-50 hidden bg-white/75 divide-y divide-gray-100
+                             rounded shadow w-80 dark:bg-gray-700/75 dark:divide-gray-600 rounded-lg">
+                                <div style="border-radius:10px 10px 0 0; height:60px;background:{% if author["color"] %}rgba
+                                    {{ author["color"] }}{% else %}#515A67{% endif %};">
+
+                                </div>
+                                <div class="px-4 py-3 text-xl text-gray-900 dark:text-white"
+                                     style="border-radius:0 0 10px 10px;">
+
+                                    <div style="text-align: left; margin-left:3px;">
+                                        <div style="margin-top:-60px;">
+                                            <img style="background:rgb(18,25,38);border-style:solid;border-width:2px; object-fit: cover;"
+                                                 src="{{ author["avatar"] }}"
+                                                 alt="{{ author["name"] }}'s Profile Picture"
+                                                 class="w-24 h-24 rounded-full border-white dark:border-gray-700">
+                                            <span class="absolute w-5 h-5 bg-green-400 border-2 border-white dark:border-gray-700 rounded-full"
+                                                  style="left:90px;top:85px;"></span>
+                                        </div>
+                                        <div>{{ author["name"] }}</div>
+                                        {% if author["email"] %}
+                                            <div class="text-sm text-gray-400">{{ author["email"] }}</div>
+                                        {% endif %}
+                                        {% if author["school"] %}
+                                            <div class="text-sm text-gray-400">User
+                                                at {{ author["school"] }}</div>
+                                        {% endif %}
+                                        <div class="mb-6">
+                                            <input type="text" id="msg"
+                                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                   placeholder="Message @{{ author["name"] }}"
+                                                   required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {% for recipientId in range(message["recipients"]|length) %}
+                                {% set recipient = message["recipients"][recipientId] %}
+                                <img data-dropdown-toggle="userDropdown{{ id }}_r{{ recipientId }}"
+                                     class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
+                                     src="{{ recipient["avatar"] }}" alt="{{ recipient["name"] }}'s Profile Picture">
+
+                                <!-- Dropdown menu -->
+                                <div id="userDropdown{{ id }}_r{{ recipientId }}"
+                                     class="z-50 hidden bg-white divide-y divide-gray-100 rounded shadow w-80 dark:bg-gray-700 dark:divide-gray-600 rounded-lg">
+                                    <div style="border-radius:10px 10px 0 0; height:60px;background:{% if recipient["color"] %}rgba
+                                        {{ recipient["color"] }}{% else %}#515A67{% endif %};"></div>
+                                    <div class="px-4 py-3 text-xl text-gray-900 dark:text-white border-b border-l">
+                                        <div style="text-align: left; margin-left:3px;">
+                                            <div style="margin-top:-60px;">
+                                                <img style="background:rgb(18,25,38)" src="{{ recipient["avatar"] }}"
+                                                     class="w-24 h-24 rounded-full border-white dark:border-gray-700 border-2 object-cover"
+                                                     alt="{{ recipient["name"] }}'s Profile Picture">
+                                                <span class="absolute  w-5 h-5 bg-green-400 border-2 border-white dark:border-gray-700 rounded-full"
+                                                      style="left:90px;top:85px;"></span>
+                                            </div>
+                                            <div>{{ recipient["name"] }}</div>
+                                            {% if recipient["email"] %}
+                                                <div class="text-sm text-gray-400">{{ recipient["email"] }}</div>
+                                            {% endif %}
+                                            {% if recipient["school"] %}
+                                                <div class="text-sm text-gray-400">User
+                                                    at {{ recipient["school"] }}</div>
+                                            {% endif %}
+                                            <input id="msg" placeholder="Message @{{ recipient["name"] }}" required
+                                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
+                                                       mb-6 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5
+                                                       dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400
+                                                       dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            {% endfor %}
+                </div>
+                </th>
+                <td class="px-6 py-4">
+                        <span data-dropdown-toggle="userDropdown_a{{ id }}"
+                              class="hover:underline"> {{ message["author"]["name"] }}</span> to
+                    {% for recipient in range(message["recipients"]|length) %}
+                        <span class="hover:underline"
+                              data-dropdown-toggle="userDropdown{{ id }}_r{{ recipient }}">{{ message["recipients"][recipient]["name"] }}</span>
+                        {% if recipient < (message["recipients"]|length - 1) %}
+                            <span>,</span>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td class="px-6 py-4">
+                    {{ message["subject"] }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ message["message"] }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ message["updated"].strftime("%m/%d/%Y, %H:%M:%S") }}
+                </td>
+                </tr>
+                <!-- Main modal -->
+                <div id="thread_{{ id }}" tabindex="-1" aria-hidden="true"
+                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                            <!-- Modal header -->
+                            <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                    {{ message["subject"] }}
+                                </h3>
+                                <button type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        data-modal-toggle="defaultModal">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                              clip-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="p-6 space-y-6">
+                                {% for thread in message["thread"] %}
+                                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                    <div class="flex items-center space-x-4">
+                                        <img class="w-10 h-10 rounded-full" src="{{ thread["author_pic"] }}" alt="">
+                                        <div class="space-y-1 font-medium dark:text-white">
+                                            <div>{{ thread["author"] }}</div>
+                                            <div class="text-sm text-gray-500 dark:text-gray-400">{{ thread["author_email"] }}</div>
+                                        </div>
+                                    </div>
+                                    </p>
+                                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                        {{ thread["message"] }}
+                                    </p><br style="color:white;">
+                                {% endfor %}
+
+                            </div>
+                            <!-- Modal footer -->
+                            <div class=" w-full flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                                <form>
+                                    <label for="chat" class="sr-only">Reply to @{{ message["author"] }}</label>
+                                    <div class="w-full flex items-center py-2 px-3 bg-gray-50 rounded-lg dark:bg-gray-700">
+                                        <button type="button"
+                                                class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                      d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                                                      clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                        <button type="button"
+                                                class="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z"
+                                                      clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                        <textarea id="chat" rows="1"
+                                                  class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                  placeholder="Reply to @{{ message["author"]["name"] }}"></textarea>
+                                        <button type="submit"
+                                                class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">
+                                            <i class="material-icons">send</i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+    </tbody>
+    </table>
+    </div>
+    <script>
+    window.onload = function(){
+        loadMoreEmail();
+    }
+    function loadMoreEmail(){
+        let start = $('#table tr').length - 1;
+        let request = $.ajax({
+            type: "POST",
+            url: "/api/v1/internal/get_schoology_messages",
+            data: {
+                "start": start
+            }
+        });
+        request.done(function (data) {
+            console.log(data);
+            let count = start-1;
+            for (let message of data){
+                let author = message["author"]
+                let dmessage = message["message"]
+                let date = message["updated"]
+                let subject = message["subject"]
+                let recipients = message["recipients"]
+                let address = `<span data-dropdown-toggle="userDropdown_a${count}" class="hover:underline">${author["name"]}</span> to `
+                let images = "<div class='flex mb-5 -space-x-4'>";
+                let profiles = "";
+                profiles += `
+                    <div id="userDropdown_a${count}" class="z-50 bg-white divide-y divide-gray-100 rounded shadow w-80 dark:bg-gray-700 dark:divide-gray-600 rounded-lg block" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 109.5px, 0px);">
+                                <div style="border-radius:10px 10px 0 0; height:60px;background:rgb${author["color"]};">
+
+                                </div>
+                                <div class="px-4 py-3 text-xl text-gray-900 dark:text-white" style="border-radius:0 0 10px 10px;">
+
+                                    <div style="text-align: left; margin-left:3px;">
+                                        <div style="margin-top:-60px;">
+                                            <img style="background:rgb(18,25,38);border-style:solid;border-width:2px; object-fit: cover;" src="https://asset-cdn.schoology.com/system/files/imagecache/profile_reg/pictures/picture-945029648977365ae6414b4e488f19f9_5f2c2665c0759.jpg" alt="Ms. Odell's Profile Picture" class="w-24 h-24 rounded-full border-white dark:border-gray-700">
+                                            <span class="absolute w-5 h-5 bg-green-400 border-2 border-white dark:border-gray-700 rounded-full" style="left:90px;top:85px;"></span>
+                                        </div>
+                                        <div>${author["name"]}</div>
+
+                                            <div class="text-sm text-gray-400">${author["email"]}</div>
+
+
+                                            <div class="text-sm text-gray-400">User
+                                                at ${author["school"]} </div>
+
+                                        <div class="mb-6">
+                                            <input type="text" id="msg" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Message @Ms. Odell" required="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>`
+
+                images += `
+                 <img data-dropdown-toggle="userDropdown_a${count}" class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" src="${author["avatar"]}" alt="">
+                `;
+                for (let i = 0; i<recipients.length; i++){
+                    address+= `<span data-dropdown-toggle="userDropdown${count}_r${i}" class="hover:underline">${recipients[i]["name"]}</span>`
+                    if (i !== (recipients.length - 1)){
+                        address += ", "
+                    }
+                    images += `
+                 <img data-dropdown-toggle="userDropdown1_${count}${i}" class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" src="${recipients[i]["avatar"]}" alt="">
+                `;
+                    profiles += `
+                    <div id="userDropdown${count}_r${i}" class="z-50 bg-white divide-y divide-gray-100 rounded shadow w-80 dark:bg-gray-700 dark:divide-gray-600 rounded-lg block" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 109.5px, 0px);">
+                                <div style="border-radius:10px 10px 0 0; height:60px;background:rgb${recipients[i]["color"]};">
+
+                                </div>
+                                <div class="px-4 py-3 text-xl text-gray-900 dark:text-white" style="border-radius:0 0 10px 10px;">
+
+                                    <div style="text-align: left; margin-left:3px;">
+                                        <div style="margin-top:-60px;">
+                                            <img style="background:rgb(18,25,38);border-style:solid;border-width:2px; object-fit: cover;" src="https://asset-cdn.schoology.com/system/files/imagecache/profile_reg/pictures/picture-945029648977365ae6414b4e488f19f9_5f2c2665c0759.jpg" alt="Ms. Odell's Profile Picture" class="w-24 h-24 rounded-full border-white dark:border-gray-700">
+                                            <span class="absolute w-5 h-5 bg-green-400 border-2 border-white dark:border-gray-700 rounded-full" style="left:90px;top:85px;"></span>
+                                        </div>
+                                        <div>${recipients[i]["name"]}</div>
+
+                                            <div class="text-sm text-gray-400">${recipients[i]["email"]}</div>
+
+
+                                            <div class="text-sm text-gray-400">User
+                                                at ${recipients[i]["school"]} </div>
+
+                                        <div class="mb-6">
+                                            <input type="text" id="msg" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Message @Ms. Odell" required="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>`
+
+                }
+                images += "</div>";
+                document.getElementById('tbody').innerHTML+= `
+            <tr data-modal-toggle="thread_${count}" class="bg-white dark:bg-gray-800 border-b  dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        ${images}
+                </th>
+                <td class="px-6 py-4">
+                        ${address}
+
+
+                </td>
+                <td class="px-6 py-4">
+                   ${subject}
+                </td>
+                <td class="px-6 py-4">
+                    ${dmessage}
+                </td>
+                <td class="px-6 py-4">
+                    ${date}
+                </td>
+
+                </tr>`;
+                count += 1;
+            }
+            loadMoreEmail();
+
+        })
+
+    }
+    </script>
+{% endblock %}

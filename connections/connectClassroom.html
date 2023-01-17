@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block main %}
+{% include "layout.html" %}
+<div style="margin:15px;">
+    <p class="text-black dark:text-white">Successfully Connected to the Google Classroom Account
+        <span class="font-bold"><img src="{{data[1]}}" style="margin-right:10px;display:inline-block;"
+                                     class="w-10 h-10 rounded-full">{{data[0]}}</span>
+    </p>
+    <button onclick="window.close();"
+            type="button"
+            class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+        <svg style="display:inline-block;" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+             xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"></path>
+        </svg>
+        OK, Close Window
+    </button>
+</div>
+
+{% endblock %}

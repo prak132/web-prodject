@@ -1,0 +1,288 @@
+{% extends "layout.html" %}
+{% block main %}
+    <style>
+        .signupbody {
+            width: 80%;
+            padding: 5rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @media (min-width: /*768px*/ 1000px) {
+            .signupbody {
+                width: 40%;
+            }
+        }
+    </style>
+    <body>
+
+    <script src="https://unpkg.com/flowbite@1.4.1/dist/datepicker.js"></script>
+    <div id="bgLms" class="noselect noclick w-full absolute" style="z-index: -1; filter:blur(1rem)">
+
+    </div>
+    <div class="container mx-auto bg-white/[0.9] signupbody absolute rounded-lg">
+        <div class="mx-auto">
+            <h1 class="text-lg font-bold">Sign Up</h1>
+            <div class="flex flex-col items-left mt-5">
+                <p class="mt-1 text-xs font-light text-gray-500">
+                    Existing Member?<a href="/signin" class="ml-1 font-medium text-blue-400">Login!</a>
+                </p>
+            </div>
+            <div class="mt-4" id="step1" style="display:block;">
+                <div class="relative">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <p class="validation-icon material-icons"
+                           style="color: gray; vertical-align: middle;">pending</p>
+                    </div>
+                    <input type="text" id="email" autocomplete="new-email"
+                           class=" text-sm rounded-lg  block w-full p-2.5
+                             mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                              focus:border-blue-500 block w-full pl-10 p-2.5"
+                           placeholder="Email Address" style="-webkit-user-select: text;">
+                </div>
+                <p style="color:gray;" class="text-sm errormsg">Welcome to Nebulus! Please enter an Email!</p>
+
+                <div class="relative">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <p class="validation-icon material-icons"
+                           style="color:gray; vertical-align: middle;">pending</p>
+                    </div>
+                    <input type="text" id="username" autocomplete="new-username"
+                           class=" border text-sm rounded-lg block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                           placeholder="Username" style="-webkit-user-select: text;">
+                </div>
+                <p style="color:gray;" class="text-sm errormsg">Welcome to Nebulus! Please enter a Username!</p>
+
+                <div class="relative">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <p class="validation-icon material-icons"
+                           style="color: gray; vertical-align: middle;">pending</p>
+                    </div>
+                    <input type="password" id="password" autocomplete="new-password"
+                           class="border text-sm rounded-lg block w-full p-2.5 mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                           placeholder="Password" style="-webkit-user-select: text;">
+                </div>
+                <p style="color:gray;" class="text-sm errormsg">Welcome to Nebulus! Please enter a password!</p>
+
+                <div class="relative">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <p class="validation-icon material-icons"
+                           style="color: gray; vertical-align: middle;">pending</p>
+                    </div>
+                    <input type="password" id="confirm-password" autocomplete="new-password"
+                           class=" border text-sm rounded-lg block w-full p-2.5 mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                           placeholder="Confirm Password" style="-webkit-user-select: text;">
+                </div>
+                <p style="color:gray;" class="text-sm errormsg">Welcome to Nebulus! Please confirm your password!</p>
+
+
+                <button onclick="prev(1);" style="margin-right:10px;float:left;"
+                        class="mt-4 px-4 py-3  leading-6 text-base rounded-md border border-transparent text-white focus:outline-none bg-blue-500 text-blue-100 hover:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer inline-flex items-center w-40 justify-center items-center font-medium focus:outline-none">
+                    <svg class="inline-block w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+
+                    Restart
+                </button>
+                <button onclick="next(1);" style="float:left;"
+                        class="mt-4 px-4 py-3  leading-6 text-base rounded-md border border-transparent text-white focus:outline-none bg-blue-500 text-blue-100 hover:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer inline-flex items-center w-40 justify-center items-center font-medium focus:outline-none">
+                    Next Step
+                    <svg class="inline-block ml-2 -mr-1 w-5 h-5" fill="currentColor"
+                         viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="mt-4" id="step2" style="display:none;">
+                <div class="relative">
+                    <div class="flex absolute inset-y-0 pb-5 left-0 items-center pl-3 pointer-events-none">
+                        <p class="validation-icon material-icons"
+                           style="color: red; vertical-align: middle;">close</p>
+                    </div>
+                    <input type="number" min="10000000" max="99999999" id="verification"
+                           class="border border-red-500 text-red-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5dark:border-red-400 mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                           placeholder="Email Verification Code (Check Your Email)" style="-webkit-user-select: text;">
+                    <p style="color:red;" class="text-sm errormsg">Incorrect Verification Code</p>
+                </div>
+                <div class="relative">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <div class="flex absolute inset-y-0 pb-5 left-0 items-center pl-3 pointer-events-none">
+                            <p class="validation-icon material-icons"
+                               style="color: red; vertical-align: middle;">close</p>
+                        </div>
+                    </div>
+                    <input datepicker datepicker-buttons id="bday" type="text"
+                           class="border border-red-500 text-red-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                           placeholder="Birthday" style="-webkit-user-select: text;">
+                    <p style="color:red;" class="text-sm errormsg">Invalid Birthday</p>
+                </div>
+
+
+                <button onclick="prev(2);" style="margin-right:10px;float:left;"
+                        class="mt-4 px-4 py-3 leading-6 text-base rounded-md border border-transparent text-white
+                         focus:outline-none bg-blue-500 text-blue-100 hover:text-white focus:ring-2 focus:ring-blue-500
+                          focus:ring-offset-2 cursor-pointer inline-flex items-center w-48 justify-center items-center
+                           font-medium focus:outline-none">
+                    <svg class="inline-block w-6 h-6" fill="none" stroke="currentColor"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+                    </svg>
+                    Previous Step
+                </button>
+                <button onclick="next(2);" style="float:left;"
+                        class="mt-4 px-4 py-3  leading-6 text-base rounded-md border border-transparent text-white
+                         focus:outline-none bg-blue-500 text-blue-100 hover:text-white focus:ring-2 focus:ring-blue-500
+                         focus:ring-offset-2 cursor-pointer inline-flex items-center w-40 justify-center items-center
+                          font-medium focus:outline-none">
+                    Next Step
+                    <svg class="inline-block ml-2 -mr-1 w-5 h-5" fill="currentColor"
+                         viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+
+            </div>
+            <div class="mt-4" id="step3" style="display:none;">
+                <label for="languages" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select
+                    your
+                    Language</label>
+                <select id="languages"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option selected>English (United States)</option>
+                    <option disabled>English (United Kingdom)</option>
+                    <option disabled>English (Australia)</option>
+                    <option disabled>Français (Français)</option>
+                    <option disabled>Español (españa)</option>
+                    <option disabled>Español (latinoamerica)</option>
+                    <option disabled>中文（中国）</option>
+                    <option disabled>中文（台灣）</option>
+                    <option disabled>한국어(한국)</option>
+                    <option disabled>日本語（日本）</option>
+                </select>
+                <label for="theme" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select your
+                    Theme</label>
+                <select id="theme"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option>Light Theme</option>
+                    <option>Dark Theme</option>
+                    <option selected>System Default</option>
+                    <option disabled>Gradient Theme (Coming Soon)</option>
+                    <option disabled>Wallpaper Theme (Coming Soon)</option>
+                </select>
+                <span style="display:none;" id="chosen">cat1</span>
+                <div style="overflow: auto; height: 100px">
+                    <img style="float:left; margin:10px;"
+                         class="cat1 pfp pfp_selected mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/black_cat.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat2 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/blue_cat.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat3 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/green_cat.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat4 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/pink_cat.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat5 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/yellow_cat.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat6 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/blurple_cat.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat7 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/red_cat.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat8 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/100_cat.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat9 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/river_cat.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat10 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/cake_cat.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat11 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/ocean_cat.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat12 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/mountains.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat13 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/pizza.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat14 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/popTart.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat15 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/v3.gif" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat16 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/v2.gif" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat17 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/newBlue.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat18 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/newGreen.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat19 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/newJade.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat20 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/newPink.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat21 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/newRed.png" alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat22 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/newYellow.png"
+                         alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat23 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/ukraine.png"
+                         alt="Pfp selection"/>
+                    <img style="float:left; margin:10px;" class="cat24 pfp mb-3 w-16 h-16 rounded-full shadow-lg"
+                         height="50" width="50" src="/static/images/nebulusCats/pride.png"
+                         alt="Pfp selection"/><br><br style="clear: left;">
+                </div>
+
+                <button onclick="prev(3);" style="float:left;margin-right:10px;"
+                        class="mt-4 px-4 py-3 leading-6 text-base rounded-md border border-transparent text-white
+                         focus:outline-none bg-blue-500 text-blue-100 hover:text-white focus:ring-2 focus:ring-blue-500
+                          focus:ring-offset-2 cursor-pointer inline-flex items-center w-48 justify-center items-center
+                           font-medium focus:outline-none">
+                    <svg class="inline-block w-6 h-6" fill="none" stroke="currentColor"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+                    </svg>
+                    Previous Step
+                </button>
+                <button onclick="next(3);" style="float:left;" class="mt-4 px-4 py-3  leading-6 text-base rounded-md
+                 border border-transparent text-white focus:outline-none bg-blue-500 text-blue-100 hover:text-white
+                  focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer inline-flex items-center w-40
+                   justify-center items-center font-medium focus:outline-none">
+                    Create Account
+                    <svg class="inline-block ml-2 -mr-1 w-5 h-5" fill="currentColor"
+                         viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <script src='/static/js/main/signup.js'></script>
+
+
+    <style>
+        .pfp_selected {
+            background: #eee0ff;
+            border-color: purple;
+            border-style: block;
+            border-width: 2px;
+        }
+
+        .pfp:hover {
+            filter: brightness(0.5) blur(1px);
+            border-color: blue;
+            border-style: block;
+            border-width: 2px;
+        }
+    </style>
+    </body>
+{% endblock %}

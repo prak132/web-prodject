@@ -1,0 +1,608 @@
+<style>
+    .datepicker .datepicker-picker .datepicker-dropdown {
+        z-index: 1000;
+    }
+</style>
+
+<script src="https://unpkg.com/flowbite@1.4.1/dist/datepicker.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+<!-- Main modal -->
+<div style="display:none" id="addDropdown">{{ course.id }}</div>
+<div id="searchModal" tabindex="-1" aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="modalheader flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
+                <h3 class="text-xl text-gray-900 lg:text-2xl dark:text-white">
+                    Search Course
+                </h3>
+                <button type="button" onclick="closeModal('searchModal');"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-toggle="searchModal">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6 dark:text-white text-black">
+                <div class="mb-6">
+                    <input type="text" id="sear"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Type here..." required>
+                    <ul id="search_items" class="scroll" style="height:60%; overflow-y:scroll;">
+                        <li>
+                            <div class="py-2.5 rounded-lg mx-auto block px-4 py-2 mx-2 dark:hover:text-white">
+                                <svg role="status"
+                                     class="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                                     viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                          fill="currentColor"/>
+                                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                          fill="currentFill"/>
+                                </svg>
+                                No Results Found
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="createFolder" tabindex="-1" aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="modalheader flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
+                <h3 class="text-xl text-gray-900 lg:text-2xl dark:text-white">
+                    Create a Folder
+                </h3>
+                <button onclick="closeModal('createFolder');" type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <div class="mb-6">
+                    <label for="foldername" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Folder
+                        Name</label>
+                    <input type="text" id="foldername"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Folder Name" required>
+                </div>
+                <br>
+                <label for="selectfolder" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select
+                    A Folder</label>
+                <select id="selectfolder"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option>United States</option>
+                    <option>Canada</option>
+                    <option>France</option>
+                    <option>Germany</option>
+                </select>
+                <br>
+                <p class="text-2xl text-black dark:text-white">Folder Color</p>
+                <!--https://tailwindcomponents.com/component/color-picker!-->
+                <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+                <div class="bg-white dark:bg-gray-700 mx-auto my-auto">
+                    <div x-data="app()" x-init="[initColor()]">
+                        <div>
+                            <label for="color-picker"
+                                   class="text-2xl text-black dark:text-white block mb-1">Select a
+                                color</label>
+                            <div class="flex flex-row relative">
+                                <input id="color-picker"
+                                       class="dark:text-white text-black dark:bg-gray-700 border border-gray-400 p-2 rounded-lg"
+                                       x-model="currentColor">
+                                <div @click="isOpen = !isOpen"
+                                     class="cursor-pointer rounded-full ml-3 my-auto h-10 w-10 flex"
+                                     :class="`bg-${currentColor}`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" :class="`${iconColor}`"
+                                         class="h-6 w-6 mx-auto my-auto" fill="none" viewBox="0 0 24 24"
+                                         stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                                    </svg>
+                                </div>
+                                <div x-show="isOpen" @click.away="isOpen = false"
+                                     x-transition:enter="transition ease-out duration-100 transform"
+                                     x-transition:enter-start="opacity-0 scale-95"
+                                     x-transition:enter-end="opacity-100 scale-100"
+                                     x-transition:leave="transition ease-in duration-75 transform"
+                                     x-transition:leave-start="opacity-100 scale-100"
+                                     x-transition:leave-end="opacity-0 scale-95"
+                                     class="border border-gray-300 origin-top-right absolute right-0 top-full mt-2 rounded-md shadow-lg">
+                                    <div class="rounded-md bg-white shadow-xs p-2">
+                                        <div class="flex">
+                                            <template x-for="color in colors">
+                                                <div class="">
+                                                    <template x-for="variant in variants">
+                                                        <div @click="selectColor(color,variant)"
+                                                             class="cursor-pointer w-6 h-6 rounded-full mx-1 my-1"
+                                                             :class="`bg-${color}-${variant}`"></div>
+                                                    </template>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    function app() {
+                        return {
+                            colors: ['gray', 'red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink'],
+                            variants: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+                            currentColor: '',
+                            iconColor: '',
+                            isOpen: false,
+                            initColor() {
+                                this.currentColor = 'red-800'
+                                this.setIconWhite()
+                            },
+                            setIconWhite() {
+                                this.iconColor = 'text-white'
+                            },
+                            setIconBlack() {
+                                this.iconColor = 'text-black'
+                            },
+                            selectColor(color, variant) {
+                                this.currentColor = color + '-' + variant
+                                if (variant < 500) {
+                                    this.setIconBlack()
+                                }
+                                else {
+                                    this.setIconWhite()
+                                }
+                            }
+                        }
+                    }
+                </script>
+                <p id="folderstatus"></p>
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                <button onclick="createFolder(); closeModal('createFolder')" type="button"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Create Folder
+                </button>
+                <button onclick="closeModal('createFolder')" type="button"
+                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="createDocument" tabindex="-1" aria-hidden="true"
+     class="hidden fixed z-50 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto bg-gray-50 dark:bg-gray-700 rounded-lg shadow">
+        <!-- Modal content -->
+        <div class="relative">
+            <!-- Modal header -->
+            <div class="modalheader flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
+                Create a document
+                <button onclick="closeModal('createDocument');" type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <h1 class="text-2xl dark:text-white">Upload a File</h1>
+                <input name="file" aria-describedby="user_avatar_help" id="file" type="file"
+                       class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"><br>
+            </div>
+        </div>
+        <!-- Modal footer -->
+        <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+            <button type="button" onclick="uploadFile(); closeModal('createDocument');"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Create Document
+            </button>
+            <button onclick="closeModal('createDocument')" type="button"
+                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+<div id="postLink" tabindex="-1" aria-hidden="true"
+     class="hidden fixed z-50 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="modalheader flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
+                Post a link
+                <button onclick="closeModal('postLink')" type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm
+                        p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <h1 class="text-2xl dark:text-white">Add a Link</h1>
+                <div class="mb-6">
+                    <label for="thelink"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Link</label>
+                    <input type="url" id="thelink"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="https://example.url/document.pdf" required>
+                </div>
+                <br>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                <button onclick="uploadLink(); closeModal('postLink')" type="button"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Post Link
+                </button>
+                <button onclick="closeModal('postLink')" type="button"
+                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="createAnnouncement" tabindex="-1" aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="modalheader flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
+                <h3 class="text-xl text-gray-900 lg:text-2xl dark:text-white">
+                    Create an Announcement
+                </h3>
+                <button onclick="closeModal('createAnnouncement');" type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm
+                         p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <label for="author" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Announcement
+                    Sender</label>
+                <input type="url" id="author"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                       placeholder="Your Teacher" required>
+                <label for="announcementname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Announcement
+                    Title</label>
+                <input type="url" id="announcementname"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                       placeholder="Announcement Title" required>
+                <label for="message" class="block mb-2 tex  t-sm font-medium text-gray-900 dark:text-gray-300">Announcement
+                    Content</label>
+                <textarea id="message" rows="4" style="resize: none"
+                          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="Announcement Content..."></textarea>
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                <button onclick="createAnnouncement(); closeModal('createAnnouncement')" type="button"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Create Announcement
+                </button>
+                <button onclick="closeModal('createAnnouncement')" type="button"
+                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="createAssignment" tabindex="-1" aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="modalheader flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
+                <h3 class="text-xl text-gray-900 lg:text-2xl dark:text-white">
+                    Create an Assignment
+                </h3>
+                <button onclick="closeModal('createAssignment');" type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm
+                         p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <div class="mb-6">
+                    <label for="assignmentname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Assignment Name
+                    </label>
+                    <input type="url" id="assignmentname" required autocomplete="off" placeholder="Assignment Title"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+                           focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full">
+                    <br>
+                    <label for="points" class="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Points
+                    </label>
+                    <input type="number" id="points" min="0" placeholder="Points" required
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+                           focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full p-2.5">
+                    <br>
+                    <label for="duedate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Assignment Due
+                    </label>
+                    <div class="flex gap-4">
+                        <div class="relative w-full">
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none material-icons
+                            text-gray-500 dark:text-gray-400">
+                                calendar_month
+                            </div>
+                            <input id="duedate" datepicker datepicker-buttons datepicker-autohide
+                                   placeholder="Select date (MM/DD/YYYY)" autocomplete="off"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full pl-10
+                               focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600
+                               dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
+                        <div class="relative w-full dark:text-white">
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none material-icons
+                            text-gray-500 dark:text-gray-400">
+                                schedule
+                            </div>
+                            <input id="duetime" placeholder="Type Time (HH:MM P)" timepicker
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full pl-10
+                               focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600
+                               dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
+                    </div>
+                    <br>
+                    <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Assignment Description</label>
+                    <textarea id="description" rows="4" placeholder="Assignment Description" style="resize: none"
+                              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300
+                              focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                              dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                </div>
+
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                <button onclick="createAssignment(); closeModal('createAssignment')" type="button"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Create Assignment
+                </button>
+                <button onclick="closeModal('createAssignment')" type="button"
+                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="createTextbook" tabindex="-1" aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="modalheader flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
+                <button onclick="closeModal('createTextbook');" type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm
+                         p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <label for="textbookname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Textbook
+                    Name</label>
+                <input type="url" id="textbookname"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                       placeholder="" required>
+                <label for="textbookname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Textbook
+                    Link</label>
+                <input type="url" id="textbookname"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                       placeholder="" required>
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                <button onclick="closeModal('createTextbook')" type="button"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Create Textbook
+                </button>
+                <button onclick="closeModal('createTextbook')" type="button"
+                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="createGrade" tabindex="-1" aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="modalheader flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
+                <h3 class="text-xl text-gray-900 lg:text-2xl dark:text-white">
+                    Create a Grade
+                </h3>
+                <button onclick="closeModal('createGrade');" type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm
+                         p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <label for="gradesname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    Assignment Name</label>
+                <input type="url" id="gradesname" placeholder="Assignment Name" required
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+                       focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white
+                       dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="gradesname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Assignment
+                    Grade</label><br>
+                <input style="float:left; width:50px;" type="url" id="gradesname"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                       value="10" required>
+                <span style="float:left; margin-left:20px;margin-right:20px;"
+                      class="text-2xl text-black dark:text-white"> / </span>
+                <input style="float:left; width:50px;" type="url" id="gradesname"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                       value="10" required><br><br>
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                <button onclick="closeModal('createGrade')" type="button"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Create Grade
+                </button>
+                <button onclick="closeModal('createGrade')" type="button"
+                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function changeSearch() {
+        let value = document.getElementById("sear").value;
+        if (value.length > 0) {
+            document.getElementById("search_items").innerHTML = `
+<li>
+<div class="py-2.5 rounded-lg mx-auto block px-4 py-2 mx-2 dark:hover:text-white">
+                <svg role="status" class="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+</svg>
+    Searching...
+</div>
+</li>
+            `;
+            const request = $.ajax({
+                type: "POST",
+                url: "/api/v1/internal/search-within_course",
+                data: JSON.stringify({
+                    search: value,
+                    course:{{ course_id }},
+                }),
+
+                contentType: 'application/json; charset=utf-8', s
+            });
+            request.done((data) => {
+                document.getElementById("search_items").innerHTML = "";
+                let temp_arr = []
+                if (data === "0") {
+                    document.getElementById("search_items").innerHTML += `
+                    <li>
+                            <div class="py-2.5 rounded-lg mx-auto block px-4 py-2 mx-2 dark:hover:text-white">
+                        <svg role="status" class="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+</svg>
+                        No Results Found
+                            </div>
+                        </li>`
+                    return;
+                }
+
+                let datas = data.split("•");
+                for (let i = 0; i < datas.length; i++) {
+                    temp_arr.push(datas[i]);
+
+                    if (i % 4 === 3) {
+                        let pic;
+                        switch (temp_arr[0]) {
+                            case "account":
+                                pic = `<img src="${temp_arr[3]}" class="object-cover inline-block w-10 h-10 rounded-full" alt="account">`;
+                                break;
+                            case "course":
+                                pic = `<img src="${temp_arr[3]}" class="object-cover inline-block w-10 h-10 rounded-full" alt="course">`;
+                                break;
+                            case "document":
+                                pic = `<i class="material-icons">description</i>`
+                                break;
+                            case "NebDoc":
+                                pic = `<i class="material-icons">draft</i>`
+                                break;
+                            case "event":
+                                pic = `<i class="material-icons">event</i>`
+                                break;
+                            case "assignment":
+                                pic = `<i class="material-icons">assignment</i>`
+                                break;
+                            case "chat":
+                                pic = `<i class="material-icons">forum</i>`
+                                break;
+                            case "announcement":
+                                pic = `<i class="material-icons">campaign</i>`;
+                                break;
+                        }
+
+                        document.getElementById("search_items").innerHTML += `
+                    <li>
+                        <span class="truncate py-2.5 rounded-lg mx-auto block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 mx-2 dark:hover:text-white" style="text-align:left;">
+                ${pic}
+                ${temp_arr[1]} <span class="text-gray-500 ml-2">${temp_arr[2]}</span></span>
+                    </li>
+`
+                    }
+                }
+            });
+        }
+
+
+    }
+
+    keyUpDelay("#sear", 1000, changeSearch)
+
+    $("[timepicker]").timepicker();
+</script>

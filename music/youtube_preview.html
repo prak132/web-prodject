@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block main %}
+    <div style="margin:20px;">
+        <title>{{ title }} | {{ author }}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+        <link href="/static/css/main.css" rel="stylesheet"/>
+        <meta property="og:title" content=
+                '{{ title }}'/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content="http://my.site.com"/>
+        <meta property="og:image" content={{ thumbnail_url }}/>
+        <meta property="og:description" content='{{ content }}'/>
+        <meta name="theme-color" content=" #c4302b">
+        <iframe width="600" height="340" src="{{ "https://www.youtube.com/embed/"+id }}" title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        <h1 class="text-black dark:text-white text-4xl">{{ title }}</h1>
+        <a href={{ author_url }}><h2 class="text-sky-500 hover:underline text-xl">{{ author }}</h2></a><br>
+        <a href={{ youtube }}>
+            <button style="padding:10px;font-size:24px; background:#c4302b;color:white;border-style:none;border-radius:5px;margin-right:10px;">
+                Watch on Youtube <i class="fa fa-youtube-play"></i></button>
+        </a>
+        <a href={{ sub }}>
+            <button style="padding:10px;font-size:24px; background:#c4302b;color:white;border-style:none;border-radius:5px;margin-right:10px;">
+                Subscribe
+            </button>
+        </a>
+        <!--<button id="myBtn" style="padding:10px;font-size:24px; background:#c4302b;color:white;border-style:none;border-radius:5px;margin-right:10px;">Share</button>!-->
+    </div>
+{% endblock %}

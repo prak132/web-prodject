@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% block main %}
+    <head>
+        <script src="/static/js/main/signin.js"></script>
+    </head>
+    <body>
+    <div id="bgLms" class="noselect noclick overflow-y-auto overflow-x-hidden"
+         style="z-index: -1; filter: blur(1rem);">
+    </div>
+    <div class="container mx-auto px-8 py-12 bg-white/[0.9] rounded-lg w-1/2 pb-1/2" id="main"
+         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="w-full">
+            <h1 class="text-lg font-bold">Login</h1>
+            <div class="flex justify-between mt-3 text-xs font-light text-gray-500">
+                <p>New to Nebulus? <a href='/signup' class="ml-1 font-medium text-blue-400">Sign up now</a></p>
+                <p>
+                    Forgot password?
+                    <span onclick="resetScreen()" class="text-blue-400 hover:text-blue-600 cursor-pointer">Reset</span>
+                </p>
+            </div>
+            <form class="flex flex-col mt-4" action="#" onsubmit="loginUser()">
+                <div class="relative">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pb-2 pointer-events-none">
+                        <p id="error" class="material-icons" style="color: gray; vertical-align: middle;">pending</p>
+                    </div>
+                    <input id="usrname" class="pl-10 p-2.5 px-4 py-3 mt-4 w-full rounded-md bg-gray-100 border-transparent
+                     focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" placeholder="Username/Email"
+                           style="-webkit-user-select: text;">
+                    <p id="error-msg" class="mt-2 text-sm text-red-600 dark:text-red-500" style="
+    color: gray !important;
+"><span
+                            class="font-medium">Welcome back</span> to Nebulus! Enter your username please.</p>
+                </div>
+
+                <div class="relative">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pb-2 pointer-events-none">
+                        <p id="password-error" class="material-icons" style="color: gray; vertical-align: middle;">
+                            pending</p>
+                    </div>
+                    <input type="password" id="psw"
+                           class="pl-10 p-2.5 px-4 py-3 mt-4 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm "
+                           placeholder="Password" style="-webkit-user-select: text;">
+                    <p id="password-error-msg" class="mt-2 text-sm text-red-600 dark:text-red-500" style="
+    color: gray !important;
+"><span
+                            class="font-medium">Welcome back</span> Please
+                        enter a password!</p>
+                </div>
+                <button id="log_in" type="submit"
+                        class="mt-4 px-4 py-3  leading-6 text-base rounded-md border border-transparent text-white focus:outline-none bg-blue-500 text-blue-100 hover:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer inline-flex items-center w-full justify-center items-center font-medium focus:outline-none">
+                    Login
+                </button>
+                <br>
+                <p id="fail" class="text-center"></p>
+                <div class="flex flex-col items-center mt-5">
+                    <p class="mt-1 text-xl font-light text-gray-500">
+                        Or, Sign in with Your Apps:
+                    </p>
+
+                    <div class="text-black flex flex-row justify-center items-center" style="	flex-wrap: wrap;">
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/google.png" alt="Rounded avatar">
+
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/facebook.png" alt="Rounded avatar">
+
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/apple.png" alt="Rounded avatar">
+
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/discord.png" alt="Rounded avatar">
+
+
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/twitter.png" alt="Rounded avatar">
+
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/microsoft.png" alt="Rounded avatar">
+
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/spotify.png" alt="Rounded avatar">
+
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/github.png" alt="Rounded avatar">
+
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/schoology.png" alt="Rounded avatar">
+
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/canvas.png" alt="Rounded avatar">
+
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/instagram.png" alt="Rounded avatar">
+
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/reddit.png" alt="Rounded avatar">
+
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/spotify.png" alt="Rounded avatar">
+                        <img class="w-6 h-6 mr-2 -ml-1" src="/static/images/logos/zoom.png" alt="Rounded avatar">
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% include "main/reset.html" %}
+    </body>
+{% endblock %}

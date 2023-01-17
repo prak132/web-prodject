@@ -1,0 +1,219 @@
+<!--Extend with Jinja!-->
+{% extends "layout.html" %}
+{% block main %}
+    <style>
+        .gradient-text {
+            background: -webkit-linear-gradient(left, #ff00a6, #8000ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bolder;
+        }
+
+        .gradient-text-dark {
+            background: -webkit-linear-gradient(left, #ff91d8, #c081ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bolder;
+        }
+    </style>
+    <body>
+    {% include "utils/navbar.html" %}
+    <div id="alert-additional-content-1" class="p-4 mt-4 ml-4 mr-4 mb-4 bg-blue-100 rounded-lg dark:bg-blue-200"
+         role="alert">
+        <div class="flex items-center">
+            <svg class="mr-2 w-5 h-5 text-blue-700 dark:text-blue-800" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      clip-rule="evenodd"></path>
+            </svg>
+            <h3 class="text-lg font-medium text-blue-700 dark:text-blue-800">Join Our Discord Server</h3>
+        </div>
+        <div class="mt-2 mb-4 text-sm text-blue-700 dark:text-blue-800">
+            Join our Discord server to get the latest news, updates, and chill in a friendly inclusive community.
+        </div>
+        <div class="flex">
+            <a href="https://discord.gg/QNgTSN2PBM">
+                <button type="button"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-800 dark:hover:bg-blue-900">
+                    <svg class="-ml-0.5 mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                        <path fill-rule="evenodd"
+                              d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                    Join Server
+                </button>
+            </a>
+        </div>
+    </div>
+    <div id="homePageBanner" class="hidden lg:block"
+         style="padding-left: 7%; margin-top: -2rem; width: 100%; justify-content: left; text-align: left; ">
+        <br><br>
+        <img id="homeBanner" src="/static/images/imageHome.png" style="width:40%;float:left;" alt="Home Page Image">
+        <div style="margin-top: 4%;width:60%;float:left;">
+            <p class="text-7xl text-gray-600 dark:text-white ml-6">Learning, All In One</p>
+            <br>
+            <p class="text-2xl text-gray-900 dark:text-white  ml-6">
+                With Nebulus, have your whole learning experience
+                <span class="gradient-text changeable-gradient">organized</span>
+                and
+                <span class="gradient-text changeable-gradient">simple</span>. All it takes is one
+                <span class="gradient-text changeable-gradient">Nebulus Account</span>.
+            </p>
+            <br>
+            {% if user %}
+                <a href="/dashboard" class="ml-6">
+                    <button type="button"
+                            class="text-base text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        Launch Nebulus
+                    </button>
+                </a>
+            {% else %}
+                <a href="/signup">
+                    <button type="button"
+                            class="text-base text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        Get Started
+                    </button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <div id="homePageBanner" class="block lg:hidden"
+         style="padding-left: 7%; margin-top: -2rem; width: 100%; justify-content: left; text-align: left; ">
+        <br><br>
+        <img id="homeBanner" src="/static/images/imageHome.png" style="width:100%;" alt="Home Page Image"><br>
+        <div style="width:100%;margin-top: 4%">
+            <p class="text-7xl text-gray-900 dark:text-white ">Learning, All In One</p>
+            <br>
+            <p class="text-2xl text-gray-900 dark:text-white">
+                With Nebulus, have your whole learning experience
+                <span class="gradient-text">organized</span>
+                and
+                <span class="gradient-text">simple</span>
+            </p>
+            <p class="text-2xl text-gray-900 dark:text-white">
+                All it takes is one
+                <span class="gradient-text">Nebulus Account</span>.
+            </p>
+            <br><br>
+            {% if user %}
+                <a href="/dashboard">
+                    <button type="button"
+                            class="text-base text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        Launch App
+                    </button>
+                </a>
+            {% else %}
+                <a href="/signup">
+                    <button type="button"
+                            class="text-base text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                        Get Started
+                    </button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <br><br>
+    <div class="flex flex-col items-center justify-center" style="clear: left;">
+        <h1 class="text-5xl text-blue-600 dark:text-white">
+            Features
+        </h1>
+        <br>
+        <div class="flex flex-col lg:flex-row" id="feature-list">
+            <div class="mt-4 mx-2">
+                <div class="h-80 block p-6 max-w-sm bg-gray-200 rounded-[30px] border border-gray-200 shadow-md hover:bg-gray-100/50 dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-700/50">
+                    <div style="height:85%;">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Connect all of Learning</h5>
+                        <p class="font-normal text-gray-700 dark:text-gray-400">
+                            No more switching between websites. Get your Schoology, Google Classroom, and Canvas
+                            accounts connected today.
+                        </p>
+                        <br>
+                    </div>
+                    <a href="/dashboard"
+                       class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Start Now!
+                        <svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-4 mx-2">
+                <div class="h-80 block p-6 max-w-sm bg-gray-200 rounded-[30px] border border-gray-200 shadow-md hover:bg-gray-100/50 dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-700/50">
+                    <div style="height:85%;">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Organize your Learning Experience
+                        </h5>
+                        <p class="font-normal text-gray-700 dark:text-gray-400">With Nebulus, there is no need to have
+                            your papers, documents, assignments, textbooks, and events be all over the place.
+                            With Nebulus, everything is organized for you in an easy-to-use way!</p>
+                        <br>
+                    </div>
+                    <a href="/dashboard"
+                       class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Start Now!
+                        <svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-4 mx-2">
+                <div class="h-80 block p-6 max-w-sm bg-gray-200 rounded-[30px] border border-gray-200 shadow-md hover:bg-gray-100/50 dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-700/50">
+                    <div style="height:85%;">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Make Learning
+                            Easier</h5>
+                        <p class="font-normal text-gray-700 dark:text-gray-400">We have tools to organize your studying,
+                            organize your materials, make learning fun, and keep you focused!</p>
+                        <br>
+                    </div>
+                    <a href="/dashboard"
+                       class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Start Now!
+                        <svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+    <script>
+        window.onload = function () {
+            if (localStorage.getItem("color-theme") === "dark") {
+                let daelements = document.getElementsByClassName("changeable-gradient");
+                console.log(daelements);
+                for (let element of daelements) {
+                    element.classList.remove("gradient-text");
+                    element.classList.add("gradient-text-dark");
+
+                }
+            }
+            document.getElementById("country").innerText = "Belize";
+            document.getElementById("login").innerText = "Login";
+            document.getElementById("signup").innerText = "Sign Up";
+            document.getElementById("country").classList.remove("text-blue-600");
+            document.getElementById("country").classList.add("text-red-600");
+            document.querySelector('meta[property="og:title"]').setAttribute("content",
+                `${document.getElementById("company").innerText} (${document.getElementById("country").innerText})| ${document.getElementsByClassName("text-7xl")[0].innerHTML}`);
+            document.querySelector('meta[property="og:description"]').setAttribute("content",
+                `${document.getElementsByClassName("text-7xl")[0].innerHTML} | ${document.getElementsByClassName("text-2xl")[3].innerText.replaceAll(" ","").replaceAll("\n", " ")}`);
+
+        }
+    </script>
+    {% include "utils/footer.html" %}
+{% endblock %}

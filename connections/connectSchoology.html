@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+{% block main %}
+<div style="margin:15px;">
+    <form id="selectdomain">
+        <p class="text-black text-5xl dark:text-white">
+            <span style="float:left;">https://</span>
+            <input style="float:left;" value="app.schoology.com" type="text" id="domain"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                   required>
+            <span style="float:left;"></span></span>
+        </p>
+        <p class="text-black dark:text-white">What this? It's the link where you login to Schoology. Every school has a
+            different link.</p><br><br>
+        <input style="float:left;" placeholder="API KEY" type="text" id="key"
+               class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+               required><br><br><br>
+        <input style="float:left;" placeholder="API Secret" type="text" id="secret"
+               class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+               required><br><br><br>
+
+
+    </form>
+    <button id="launchBTN" type="button"
+            class="text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">
+        Connect Schoology
+    </button>
+    <button id="confirmBTN" style="display:none;" type="button"
+            class="text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900">
+        I Confirm I want to Connect this Schoology Accounts
+    </button>
+    <div id="confirmation" class="dark:text-white text-black" style="display:none;">
+        <p class="text-2xl">Successfully connected a Schoology account. The details are below:</p>
+        <p>Name: <span id="name"></span></p>
+        <p>Email: <span id="email"></span></p>
+        <button onclick="window.close();"
+                type="button"
+                class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+            <svg style="display:inline-block;" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"></path>
+            </svg>
+            OK, Close Window
+        </button>
+    </div>
+    <span style="color:red;display:none" id="error">Something went wrong! Please try again and make sure to click "Accept" in the Schoology popup.</span>
+    <span style="color:red;display:none" id="error2">Login Failed. Reason: This Schoology account is already connected.</span>
+    <script>
+
+        $('#confirmBTN').on('click', function () {
+            var $this = $(this);
+            $this.button('loading');
+            setTimeout(function () {
+
+                var request = $.ajax({
+                    type: "POST",
+                    url: "/api/v1/internal/connect-to-schoology",
+                    data: {
+                        "link": "https://" + document.getElementById("domain").value ,
+                        "key":document.getElementById("key").value,
+                        "secret":document.getElementById("secret").value
+                    }
+                });
+                request.done(function (data) {
+                    $this.button('reset');
+                    resp = document.getElementById("error")
+                    if (data === "error!!!") {
+
+                        document.getElementById("launchBTN").style.display = "block";
+                        document.getElementById("error").style.display = "block";
+
+                    } else if (data === "2") {
+                        document.getElementById("launchBTN").style.display = "block";
+                        document.getElementById("error2").style.display = "block";
+
+
+                    } else {
+                        let email = data.split("•")[1];
+                        let name = data.split("•")[0];
+                        document.getElementById("confirmation").style.display = "block";
+                        document.getElementById("name").innerHTML = name;
+                        document.getElementById("email").innerHTML = email;
+
+                    }
+                });
+
+            }, 1000);
+
+
+        });
+
+
+
+        $('#launchBTN').on('click', function () {
+            $.ajax({
+                type: 'POST',
+                url: '/api/v1/internal/get-schoology',
+                data: {
+                    "link": "https://" + document.getElementById("domain").value
+                }
+
+            }).done(function (data) {
+                newwindow2 = window.open(data, 'Authorize with Schoology2', 'height=400,width=800');
+                document.getElementById("launchBTN").style.display = "none";
+                document.getElementById("confirmBTN").style.display = "none";
+                document.getElementById("selectdomain").style.display = "none";
+
+                function checkIfDone() {
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/v1/internal/check-schoology-connection",
+                        data: {}
+                    }).done(function (data) {
+                            if (data === "False") {
+                                checkIfDone();
+                            } else {
+                                return;
+                            }
+                        }
+                    );
+                }
+
+                checkIfDone();
+                document.getElementById("confirmBTN").style.display = "block";
+
+            });
+        });
+
+        var input = document.getElementById('domain'); // get the input element
+        input.addEventListener('input', resizeInput); // bind the "resizeInput" callback on "input" event
+        resizeInput.call(input); // immediately call the function
+
+        function resizeInput() {
+            this.style.width = this.value.length + "ch";
+        }
+    </script>
+
+</div>
+{% endblock %}

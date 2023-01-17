@@ -1,0 +1,271 @@
+{%  extends "layout.html" %}
+{% block main %}
+<script>hljs.highlightAll();
+    function switchEditor(id) {
+        document.getElementsByClassName("CodeMirror")[0].style.display = "none";
+        document.getElementsByClassName("CodeMirror")[1].style.display = "none";
+        document.getElementsByClassName("CodeMirror")[2].style.display = "none";
+        document.getElementsByClassName("CodeMirror")[3].style.display = "none";
+        document.getElementsByClassName("CodeMirror")[id].style.display = "block";
+    }
+</script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+<style>
+    body{
+        color:white;
+        background:#121926;
+        margin:0;
+    }
+    .avatar{
+        border-radius:50%;
+        margin:5px;
+    }
+
+    .cm-error{
+        border-bottom:2px dotted red;
+        display: inline-block;
+        position: relative;
+        background: transparent !important;
+
+    }
+
+    .cm-error:after {
+        content: '';
+        width: 100%;
+        border-bottom:2px dotted red;
+        position: absolute;
+        font-size: 16px;
+        top: 15px; /* Must be font-size minus one (16px - 1px) */
+        left: -2px;
+        display: block;
+        height: 4px;
+
+
+    }
+
+    .active, .collapsible:hover {
+        background-color: rgba(0, 0, 0,0.1);
+    }
+    textarea{
+        display:none;
+    }
+
+
+</style>
+
+    <div class="border-b border-gray-200 dark:border-gray-700">
+        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
+            <li class="mr-2">
+                <a onclick="switchEditor(2)" class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
+                    <i class='fab fa-html5 mr-2 w-5 h-5 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300'></i>index.html
+                </a>
+            </li>
+            <li class="mr-2">
+                <a onclick="switchEditor(0)" class="inline-flex p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600 active dark:text-blue-500 dark:border-blue-500 group" aria-current="page">
+                    <i class='fab fa-python mr-2 w-5 h-5 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300'></i> main.py
+                </a>
+            </li>
+            <li class="mr-2">
+                <a onclick="switchEditor(1)" class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
+                    <i class='fab fa-java mr-2 w-5 h-5 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300'></i>main.java
+                </a>
+            </li>
+            <li class="mr-2">
+                <a onclick="switchEditor(3)" class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
+                    <i class='fab fa-circle-c mr-2 w-5 h-5 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300'></i>main.cpp
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div id="loading" class="text-black dark:text-white text-2xl m-6">
+        <svg role="status" class="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+        </svg> Loading your Editor
+    </div>
+    <div class="content">
+
+        <form method='POST' action='/try' id='formID'>
+            <textarea id='pythoneditor' name='pythoncode'>print('Hello, World!')</textarea>
+            <textarea id='javaeditor' style="display:none;" name='javacode'>
+                public class Main {
+                    public static void main(String[] args) {
+                        System.out.println("Hello, World!");
+                    }
+                }
+            </textarea>
+            <textarea id='htmleditor' style="display:none;" name='htmlcode'><h1>Hello World</h1></textarea>
+            <textarea id='cppeditor' style="display:none;" name='cppcode'>
+#include <iostream>
+
+int main() {
+    std::cout << "Hello World!";
+    return 0;
+}
+            </textarea>
+
+            <button type="submit"  class="run relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+  <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+      Run Program
+  </span>
+            </button>
+            <script>
+                var myForm = document.getElementById('formID');
+                myForm.onsubmit = function() {
+                    var w = window.open('about:blank','Popup_Window','toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=400,height=300,left = 312,top = 234');
+                    this.target = 'Popup_Window';
+                };
+            </script>
+
+            <style>
+                .CodeMirror {
+                    font-family: 'Courier Prime', monospace;
+                    font-size: 16px;
+                    background: #121926 !important;
+                }
+                .CodeMirror-gutters{
+                    font-family: 'Courier Prime', monospace;
+                    font-size: 16px;
+                    background: #121926 !important;
+                }
+                .run{
+                    z-index:50;
+                    top:10px;
+                    right:10px;
+                    position: absolute;
+                }
+
+                .cm-string{
+                    color:#A4D6FE !important;
+                }
+                .cm-keyword{
+                    color:#FF7A73 !important;
+                }
+                .cm-variable{
+                    color:#C8D0D8 !important;
+                }
+                .cm-comment{
+                    color:#8B949E !important;
+                }
+                .cm-comment{
+                    color:#8B949E !important;
+                }
+                .cm-property{
+                    color:#FEA757 !important;
+                }
+                .cm-builtin{
+                    color:#CCA4F9  !important;
+                }
+                .cm-operator{
+                    color:#A4D6FE !important;
+                }
+
+
+            </style>
+        </form>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js" integrity="sha512-hG/Qw6E14LsVUaQRSgw0RrFA1wl5QPG1a4bCOUgwzkGPIVFsOPUPpbr90DFavEEqFMwFXPVI0NS4MzKsInlKxQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css" integrity="sha512-uf06llspW44/LZpHzHT6qBOIVODjWtv4MxCricRxkzvopAlSWnTf6hpZTFxuuZcuNE9CBQhqE0Seu1CoRk84nQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/keymap/emacs.min.js" integrity="sha512-vkAJFl6fSbUY4MDhe50ATyWN/8jLYZPtxqELsXbbxA+bSxk8n/0iVBeGQqCJJYv2mn1bhBKs7du3A0HbtgrLEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/keymap/sublime.min.js" integrity="sha512-SV3qeFFtzcmGtUQPLM7HLy/7GKJ/x3c2PdiF5GZQnbHzIlI2q7r77y0IgLLbBDeHiNfCSBYDQt898Xp0tcZOeA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/keymap/vim.min.js" integrity="sha512-v2ud5hEJ+CD2N20EuKBhlN93edH0iFunpVrKf9V1pnwTe/Z8S5JfJOknGZDnQkACo/Pxy8C9htQliBLeDbbnog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/meta.min.js" integrity="sha512-/2x+sfL5ERHfoViXm/UncFBzaD54f2bkjEui6w2IheEUafG2gcHJv3gQ4VDIqNr+LuApQwpnsjjrEMXI43nPzg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/midnight.min.css" integrity="sha512-ZTF0X2l7PXEFDyP+MSOK0QM3Qh+C+lQ70Tqx4vQb3+6Uxh2lYkwmbSbpDmksZaX8w0sSz8ctVBnPSzAR1TQlzA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js" integrity="sha512-2M0GdbU5OxkGYMhakED69bw0c1pW3Nb0PeF3+9d+SnwN1ryPx3wiDdNqK3gSM7KAU/pEV+2tFJFbMKjKAahOkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script type="text/javascript"
+                src="/site.com/js/libs/codemirror/mode/xml/xml.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/htmlmixed/htmlmixed.min.js" integrity="sha512-2M0GdbU5OxkGYMhakED69bw0c1pW3Nb0PeF3+9d+SnwN1ryPx3wiDdNqK3gSM7KAU/pEV+2tFJFbMKjKAahOkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/clike/clike.min.js" integrity="sha512-l8ZIWnQ3XHPRG3MQ8+hT1OffRSTrFwrph1j1oc1Fzc9UKVGef5XN9fdO0vm3nW0PRgQ9LJgck6ciG59m69rvfg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://codemirror.net/addon/search/search.js"  integrity="sha512-2M0GdbU5OxkGYMhakED69bw0c1pW3Nb0PeF3+9d+SnwN1ryPx3wiDdNqK3gSM7KAU/pEV+2tFJFbMKjKAahOkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://codemirror.net/addon/search/searchcursor.js"  integrity="sha512-2M0GdbU5OxkGYMhakED69bw0c1pW3Nb0PeF3+9d+SnwN1ryPx3wiDdNqK3gSM7KAU/pEV+2tFJFbMKjKAahOkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://codemirror.net/addon/search/jump-to-line.js"  integrity="sha512-2M0GdbU5OxkGYMhakED69bw0c1pW3Nb0PeF3+9d+SnwN1ryPx3wiDdNqK3gSM7KAU/pEV+2tFJFbMKjKAahOkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://codemirror.net/addon/dialog/dialog.js"  integrity="sha512-2M0GdbU5OxkGYMhakED69bw0c1pW3Nb0PeF3+9d+SnwN1ryPx3wiDdNqK3gSM7KAU/pEV+2tFJFbMKjKAahOkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="stylesheet" href="https://codemirror.net/addon/dialog/dialog.css" integrity="sha512-ZTF0X2l7PXEFDyP+MSOK0QM3Qh+C+lQ70Tqx4vQb3+6Uxh2lYkwmbSbpDmksZaX8w0sSz8ctVBnPSzAR1TQlzA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script>
+
+            let cm = new CodeMirror.fromTextArea(document.getElementById("pythoneditor"), {
+                value: "print('Hello, World!')",
+                lineNumbers: true,
+                mode: "python",
+                theme: "midnight",
+                indentUnit: 4,
+                smartIndent: true,
+                tabSize: 4,
+                indentWithTabs:true,
+                electricChars: true,
+                lineWrapping: false,
+                firstLineNumber: 1,
+                fixedGutter: true,
+                scrollbarStyle: "native",
+                screenReaderLabel: "Code editor",
+                autofocus: true,
+            });
+            CodeMirror.commands.autocomplete = function(cm) {
+                CodeMirror.simpleHint(cm, CodeMirror.pythonHint);
+            }
+            cm.setSize("100%", "100%");
+            let cm2 = new CodeMirror.fromTextArea(document.getElementById("htmleditor"), {
+                value: "<h1>Hello World</h1>",
+                lineNumbers: true,
+                //mode: "text/html",
+                mode: "xml",
+                theme: "midnight",
+                indentUnit: 4,
+                smartIndent: true,
+                tabSize: 4,
+                indentWithTabs:true,
+                electricChars: true,
+                lineWrapping: false,
+                firstLineNumber: 1,
+                fixedGutter: true,
+                scrollbarStyle: "native",
+                screenReaderLabel: "Code editor",
+                autofocus: true,
+            });
+            cm2.setSize("100%", "100%");
+            let cm3 = new CodeMirror.fromTextArea(document.getElementById("javaeditor"), {
+                value: "System.println('Hello World');",
+                lineNumbers: true,
+                mode: "text/x-java",
+                theme: "midnight",
+                indentUnit: 4,
+                smartIndent: true,
+                tabSize: 4,
+                indentWithTabs:true,
+                electricChars: true,
+                lineWrapping: false,
+                firstLineNumber: 1,
+                fixedGutter: true,
+                scrollbarStyle: "native",
+                screenReaderLabel: "Code editor",
+                autofocus: true,
+            });
+            cm3.setSize("100%", "100%");
+            let cm4 = new CodeMirror.fromTextArea(document.getElementById("cppeditor"), {
+                value: "<h1>Hello World</h1>",
+                lineNumbers: true,
+                mode: "text/x-c++src",
+                theme: "midnight",
+                indentUnit: 4,
+                smartIndent: true,
+                tabSize: 4,
+                indentWithTabs:true,
+                electricChars: true,
+                lineWrapping: false,
+                firstLineNumber: 1,
+                fixedGutter: true,
+                scrollbarStyle: "native",
+                screenReaderLabel: "Code editor",
+                autofocus: true,
+            });
+            cm4.setSize("100%", "100%");
+            document.getElementsByClassName("CodeMirror")[0].style.display = "none";
+            document.getElementsByClassName("CodeMirror")[1].style.display = "none";
+            document.getElementsByClassName("CodeMirror")[2].style.display = "none";
+            document.getElementsByClassName("CodeMirror")[3].style.display = "none";
+            document.getElementById("loading").style.display="none";
+            document.getElementsByClassName("CodeMirror")[0].style.display = "block";
+        </script>
+
+    </div>
+{% endblock %}

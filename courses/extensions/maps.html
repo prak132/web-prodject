@@ -1,0 +1,24 @@
+<div id="here">
+
+</div>
+<script>
+    fetch('https://api.ipregistry.co/?key=fu91jwv1c895vpw9')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (payload) {
+            let country = payload.location.country.name;
+            let lang = payload.location.language.code;
+            console.log( + ', ' + payload.location.city);
+            document.getElementById('here').innerHTML = `
+            <iframe
+        width="100%"
+        height="100%"
+        style="border:0"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD2J7jrDxcTklceXZ8-dbLvsNYFMOrqEOs&q=${country}&language=${lang}">
+</iframe>`
+        });
+</script>

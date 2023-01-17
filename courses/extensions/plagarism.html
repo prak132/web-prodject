@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block main %}
+<div id="body">
+    <p id="short" class="text-red-500" style="display:none;">Your Message is Too Short</p>
+    <div style="width:50%; float:left;">
+        <div style="width:95%;margin:auto;">
+            <label for="message1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your Writing</label>
+            <textarea id="message1" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
+        </div>
+    </div>
+    <div style="width:50%;float:left;">
+        <div style="width:95%;margin:auto;">
+        <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Reference Article / Peer's Writing</label>
+        <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
+        </div>
+    </div>
+
+    <center>
+    <button style="margin-top:10px;" onclick="checkPlagarism()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Check For Plagarism!</button>
+    </center>
+</div>
+<script>
+function checkPlagarism(){
+    let message = document.getElementById('message').value;
+    let message1 = document.getElementById('message1').value;
+    let request = $.ajax({
+        url: "/api/v1/internal/plagarism",
+        method: "POST",
+        data: {
+            text1: message,
+            text2: message1
+        }
+    });
+    request.done(
+
+        function(data){
+            if (data === "short"){
+                document.getElementById("short").style.display = "block";
+            }
+            else {
+                let newdata = data.split("•");
+                document.getElementById('body').innerHTML = `
+                <p class="text-black dark:text-white text-3xl">${newdata[1]} ${newdata[0]}%</p>
+                <img src="${newdata[2]}">
+                `
+            }
+        }
+    );
+
+}
+</script>
+{% endblock %}

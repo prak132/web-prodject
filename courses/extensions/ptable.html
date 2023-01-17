@@ -1,0 +1,47 @@
+{% raw %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Montserrat'><link rel="stylesheet" href="/static/css/ptable.css">
+
+</head>
+<body style="height:100%;overflow: scroll;">
+<!-- partial:index.partial.html -->
+<div class="container">
+  <transition name="fade">
+    <div class="overlay" v-if="overlay" @click="hideOverlay"></div>
+  </transition>
+  <transition name="fade">
+    <div class="wholeContainer" v-if="overlay">
+      <span class="name" v-bind:class="selectedSquare.groupBlock">{{selectedSquare.name}} [{{selectedSquare.symbol}}], {{selectedSquare.atomicNumber}}</span>
+      <span class="yearDiscovered" v-if="selectedSquare.yearDiscovered" v-bind:class="selectedSquare.groupBlock">Discovered in {{selectedSquare.yearDiscovered}}</span>
+      <div class="detailsView">
+        <div class="electrons" v-for="electron in 3"></div>
+        <div class="selectedSquare"v-bind:class="selectedSquare.groupBlock">&nbsp    
+        </div>
+      </div>
+    </div>
+  </transition>
+  
+  <div class="squareContainer" v-bind:class="{blurred: overlay}">
+    <div class="square" v-for="square in squares" :key="square.atomicNumber" v-bind:class="square.groupBlock" @click="showDetails(square)">
+      <span class="atomicNumber">{{square.atomicNumber}}</span>
+      <span class="symbol">{{square.symbol}}</span>
+      <span class="name">{{square.name}}</span>
+      <span class="atomicMass">{{square.atomicMass}}</span>
+    </div>
+    <div class="legend">
+      <div v-for="groupBlock in groupBlocks">
+        <div class="color" v-bind:style="{background: groupBlock.color}"></div>{{groupBlock.name}}
+      </div>
+    </div>
+  </div>
+  
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js'></script><script  src="/static/js/ptable.js"></script>
+
+</body>
+</html>
+{% endraw %}

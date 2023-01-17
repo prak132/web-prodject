@@ -1,0 +1,309 @@
+<!--Extend with Jinja!-->
+{% extends "layout.html" %}
+{% block main %}
+    <head>
+        <style>
+            .announcement:hover .hover-buttons {
+                visibility: visible
+            }
+        </style>
+    </head>
+
+    <body>
+    {% include "utils/navbar.html" %}
+    <br>
+    <div style="margin-left:20px; height:10%;">
+        <h1 class="noselect text-black text-4xl dark:text-white">Good Afternoon, {{ user }}<span
+                style="float:right;margin-right:20px;" class="text-4xl" id="time">5:02</span></h1>
+
+
+    </div>
+    <br><br>
+
+    <h2 class="noselect text-black dark:text-white text-2xl ml-6">Recent Activity</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 p-6" aria-label="Recent Activity">
+        <div class="pb-2">
+            <table class="text-gray-500 dark:text-gray-400 bg-gray-100/75 dark:bg-gray-800/75 w-full text-sm rounded-lg"
+                   style="table-layout: fixed; overflow: hidden !important;">
+
+                <thead class="text-xs text-gray-700 uppercase bg-gray-200/59 dark:bg-gray-700/59 dark:text-gray-400">
+                <tr>
+                    <th class="px-6 py-3 text-left">Event</th>
+                    <th class="px-6 py-3 text-left">Date</th>
+                    <th class="px-6 py-3 text-left">Time</th>
+                    <th class="px-6 py-3 text-left">Course</th>
+                    <th class="px-6 py-3 text-left"><span class="sr-only">Edit</span></th>
+                </tr>
+                </thead>
+
+                <tbody style="display: block; height:20rem;">
+                {% if events|length == 0 %}
+                    <tr class="text-gray-400 dark:text-gray-400 mt-4">
+                        <td class="text-center" style="transform: translateX(-5%)">No Events</td>
+                    </tr>
+                {% else %}
+                    {% for event in events %}
+                        {% if event._cls == "Event" %}
+                            <tr style="display: table; vertical-align: top;" aria-label="Event"
+                                class="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 h-4">
+                                <td class="truncate w-1/3 border-t-2 border-gray-200 dark:border-gray-700 px-6 py-4">
+                                        <span class="material-icons-outlined mr-2"
+                                              style="vertical-align: bottom">event</span>
+                                    {{ event.title }}
+                                </td>
+                                <td class="truncate w-1/3 border-t-2 border-gray-200 dark:border-gray-700 px-6 py-1">
+                                    {{ strftime(event.date.date(), "%m/%d/%Y") }}
+                                </td>
+                                <td class="truncate w-1/3 border-t-2 border-gray-200 dark:border-gray-700 px-6 py-1">
+                                    {{ strftime(event.date.time(), "%I:%M %p") }}
+                                </td>
+                                <td class="truncate w-1/3 border-t-2 border-gray-200 dark:border-gray-700 px-6 py-1">
+                                    <span data-tooltip-placement="top" data-tooltip-target="eventCourseName{{ event.id }}">{{ event.course.name }}</span>
+                                    <div id="eventCourseName{{ event.id }}" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                        {{ event.course.name }}
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
+
+                                    <style>
+                                        #eventCourseName{{ event.id }} {
+                                        }
+                                    </style>
+                                </td>
+
+                                <td class="truncate w-1/3 border-t-2 border-gray-200 dark:border-gray-700 px-6 py-1">
+                                    <span class="noselect text-blue-500 hover:text-blue-700">Edit</span>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr style="display: table; vertical-align: top;" aria-label="Assignment"
+                                class="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 h-4">
+                                <td class="truncate w-1/3 border-t-2 border-gray-200 dark:border-gray-700 px-6 py-4">
+                                    <span class="material-icons-outlined mr-2" style="vertical-align: bottom">description</span>
+                                    {{ event.title }}
+                                </td>
+                                <td class="truncate w-1/3 border-t-2 border-gray-200 dark:border-gray-700 px-6 py-4">
+                                    {{ strftime(event.due.date(), "%m/%d/%Y") }}
+                                </td>
+                                <td class="truncate w-1/3 border-t-2 border-gray-200 dark:border-gray-700 px-6 py-4">
+                                    {{ strftime(event.due.time(), "%I:%M %p") }}
+                                </td>
+                                <td class="truncate w-1/3 border-t-2 border-gray-200 dark:border-gray-700 px-6 py-4">
+                                    {{ event.course.name }}
+                                </td>
+                                <td class="truncate w-1/3 border-t-2 border-gray-200 dark:border-gray-700 px-6 py-4">
+                                    <span class="text-blue-500 hover:text-blue-700">Edit</span>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+
+
+        </div>
+        <div class="pb-2" style="margin-top: -3rem; height: 20rem">
+            <h2 class="noselect text-black dark:text-white text-2xl">Recent Announcements</h2>
+            <div class="scroll h-full" aria-label="Recent Announcements">
+                <div class="grid gap-4 pl-4 mt-5 block p-6 bg-white/75 rounded-lg border border-gray-200 shadow-md overflow-auto dark:bg-gray-800/75 dark:border-gray-700 hover:scroll"
+                     style="grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));height:360px">
+                    {% for a in announcements %}
+                        <div id="announcement-{{ a.id }}" role="alert"
+                             class="announcement p-4 mb-4 bg-gray-100 rounded-lg dark:bg-gray-700 w-72 h-64 mt-5">
+                            <div class="flex items-center">
+                                <svg class="mr-2 w-5 h-5 text-gray-700 dark:text-gray-300" fill="currentColor"
+                                     viewBox="0 0 20 20"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                          clip-rule="evenodd"></path>
+                                </svg>
+
+                                <h3 class="text-lg font-medium text-black dark:text-white truncate"
+                                    style="width: 10.9rem">
+                                    {{ a.title }}{{ a.author * (a.title == "")|int }}
+                                </h3>
+
+                                <div class="text-gray-500 invisible hover-buttons cursor-pointer"
+                                     style="transform: translate(1rem, -0.75rem);">
+                                    <p class="material-icons hover:text-blue-600">visibility</p>
+                                    <p class="material-icons hover:text-blue-600"
+                                       data-dismiss-target="#announcement-{{ a.id }}">close</p>
+                                </div>
+                            </div>
+                            <p class="noselect text-xs text-gray-700 uppercase dark:text-gray-400"
+                               style="margin-left: 1.8rem">
+                                {{ a.course.name }} {{ (" > " + a.author) * (a.title != "")|int }}
+                            </p>
+                            <div class="mt-2.5 text-sm text-gray-500 dark:text-gray-300 line-clamp-6"
+                                 style="height: 7.5rem">
+                                {% for line in a.content.strip().split("\n")[:7] %}
+                                    {% if line != "" %}
+                                        <p>{{ line }}</p>
+                                    {% else %}
+                                        <br>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <p class="noselect mt-6 text-xs text-gray-400 dark:text-gray-400">{{ strftime(a.date, "%-I:%M %p on %B %-d, %Y") }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div style="width:calc(100% - 3rem); margin-left: 2%; overflow: visible;" class="pb-2">
+        <h2 class="noselect text-black dark:text-white text-2xl mb-5">Recent Courses</h2>
+        <div style="height:360px" class="block p-6 bg-white/75 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800/75
+         dark:border-gray-700 hover:scroll overflow-auto">
+            <div class="text-left grid justify-start"
+                 style="grid-template-columns: repeat(auto-fit, 23rem); align-items: center; justify-content: center;"
+                 aria-label="Recent Courses">
+                {% for course in user_courses %}
+                    <a href="/course/{{ course.id }}" style="width:18rem; margin-top: 2.5rem; margin-bottom: 2.5rem"
+                       aria-label="Course: {{ course.name }}"
+                       class="max-w-sm bg-gray-50/75 hover:bg-gray-200/75 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800/75 dark:hover:bg-gray-600/75 dark:border-gray-700">
+                        <img class="rounded-t-lg w-full" src="{{ course.avatar.avatar_url }}" alt="Course Image">
+                        <div class="p-5">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white truncate">{{ course.name }}</h5>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <br>
+    <br><br><br>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 w-full" aria-label="Recent Activity">
+        <div class="pb-2">
+            <h2 class="noselect text-black dark:text-white text-2xl">Your Apps</h2>
+            <div class="scroll h-full" aria-label="Your Apps">
+                <div class="pl-4 mt-5 block p-6 bg-white/75 rounded-lg border border-gray-200 shadow-md  dark:bg-gray-800/75 dark:border-gray-700 "
+                     style="grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));height:360px;">
+                    <a href="/notepad">
+                        <div class="inline-flex items-center mb-3 ml-3 mr-3 mt-3 rounded-lg opacity-75 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 w-20 h-20 text-center">
+                            <i class="material-icons text-white w-full" style="font-size: 60px;">description</i>
+                        </div>
+                    </a>
+                    <a href="/planner">
+
+                        <div class="inline-flex items-center mb-3 ml-3 mr-3 mt-3 r rounded-lg opacity-75 bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 w-20 h-20 text-center">
+                            <i class="material-icons text-white w-full" style="font-size: 60px;">calendar_month</i>
+                        </div>
+                    </a>
+                    <a href="/study">
+                        <div class="inline-flex items-center mb-3 ml-3 mr-3 mt-3 r rounded-lg opacity-75 bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 w-20 h-20 text-center">
+                            <i class="material-icons text-white w-full" style="font-size: 60px;">timer</i>
+                        </div>
+                    </a>
+                    <a href="/api">
+                        <div class="inline-flex items-center mb-3 ml-3 mr-3 mt-3 r rounded-lg opacity-75 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 w-20 h-20 text-center">
+                            <i class="material-icons text-white w-full" style="font-size: 60px;">code</i>
+                        </div>
+                    </a>
+                    <a href="/music">
+                        <div class="inline-flex items-center mb-3 ml-3 mr-3 mt-3 r rounded-lg opacity-75 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 w-20 h-20 text-center">
+                            <i class="material-icons text-white w-full" style="font-size: 60px;">music_note</i>
+                        </div>
+                    </a>
+                    <a href="/chat">
+                        <div class="inline-flex items-center mb-3 ml-3 mr-3 mt-3 r rounded-lg opacity-75 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 w-20 h-20 text-center">
+                            <i class="material-icons text-white w-full" style="font-size: 60px;">forum</i>
+                        </div>
+                    </a>
+                    <a href="/files">
+                        <div class="inline-flex items-center mb-3 ml-3 mr-3 mt-3 r rounded-lg opacity-75 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 w-20 h-20 text-center">
+                            <i class="material-icons text-white w-full" style="font-size: 60px;">folder_open</i>
+                        </div>
+                    </a>
+                    <a href="/lms">
+                        <div class="inline-flex items-center mb-3 ml-3 mr-3 mt-3 r rounded-lg opacity-75 bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 to-blue-700 w-20 h-20 text-center">
+                            <i class="material-icons text-white w-full" style="font-size: 60px;">school</i>
+                        </div>
+                    </a>
+                    <a href="/settings">
+                        <div class="inline-flex items-center mb-3 ml-3 mr-3 mt-3 r rounded-lg opacity-75 bg-gradient-to-r from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 w-20 h-20 text-center">
+                            <i class="material-icons text-white w-full" style="font-size: 60px;">settings</i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="pb-2" style="height: 20rem">
+            <h2 class="noselect text-black dark:text-white text-2xl">Your Documents</h2>
+            <div class="scroll h-full" aria-label="Recent Announcements">
+                <div class="grid gap-4 pl-4 mt-5 block p-6 bg-white/75 rounded-lg border border-gray-200 shadow-md  dark:bg-gray-800/75 dark:border-gray-700 overflow-auto hover:scroll"
+                     style="grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));height:360px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 md:gap-8 p-6" aria-label="Recent Activity">
+        <div class="pb-2">
+            <h2 class="noselect text-black dark:text-white text-2xl">Your Recent Emails</h2>
+            <div class="scroll h-full" aria-label="Your Apps">
+                <div class="pl-4 mt-5 block p-6 bg-white/75 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800/75 dark:border-gray-700 hover:scroll overflow-auto"
+                     style="height:360px">
+                </div>
+            </div>
+        </div>
+        <div class="pb-2" style="height: 20rem">
+            <h2 class="noselect text-black dark:text-white text-2xl">Your Planner Events for Today</h2>
+            <div class="scroll h-full" aria-label="Recent Announcements">
+                <div class="grid gap-4 pl-4 mt-5 block p-6 bg-white/75 rounded-lg border border-gray-200 shadow-md hover:scroll overflow-auto dark:bg-gray-800/75 dark:border-gray-700 "
+                     style="grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));height:360px">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../../static/js/user/dashboard.js"></script>
+    <style>
+        table, tr td {
+            /*border: 1px solid red*/
+        }
+
+        tbody {
+            display: block;
+            height: 50px;
+            overflow: auto;
+        }
+
+        thead, tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed; /* even columns width , fix width of table too*/
+        }
+
+        thead {
+            width: calc(100% - 3px) /* scrollbar is average 1em/16px width, remove it from thead width */
+        }
+
+        table {
+            width: 400px;
+        }
+    </style>
+    <script>
+        function setTime() {
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+            const d = new Date();
+            let day = days[d.getDay()];
+            let min = d.getMinutes();
+            let hour = d.getHours();
+            let year = d.getFullYear();
+            let month = d.getMonth() + 1;
+            let date = d.getDate() + 1;
+            document.getElementById("time").innerText = `
+            ${hour}:${min}   ${day}, ${month}/${date}/${year} `
+        }
+
+        setInterval(setTime, 200)
+    </script>
+    </body>
+{% endblock %}

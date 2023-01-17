@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block main %}
+    <style>
+    .document{
+        background: white;
+        height: 230px;
+        width: 160px;
+        margin:40px;
+        /*float:left;*/
+        display:inline-block;
+    }
+    </style>
+    {% include "utils/navbar.html" %}
+    <div class="bg-gray-800 ml-3">
+        <h1 class="text-black dark:text-white text-3xl">Templates</h1>
+        <div class="document"></div>
+        <div class="document"></div>
+        <div class="document"></div>
+        <div class="document"></div>
+    </div>
+    <div class=" ml-3">
+    <h1 class="text-black dark:text-white text-3xl">Recent Documents</h1>
+        <div class="document"></div>
+        <div class="document"></div>
+        <div class="document"></div>
+        <div class="document"></div>
+        <div class="document"></div>
+        <div class="document"></div>
+        <div class="document"></div>
+        <div class="document"></div>
+
+
+
+    </div>
+{% endblock %}

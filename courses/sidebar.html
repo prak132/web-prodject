@@ -1,0 +1,127 @@
+<aside class="w-80 h-full" aria-label="Sidebar">
+    <div class="px-3 py-4 overflow-y-auto rounded bg-gray-100/75 dark:bg-gray-800/75 h-full">
+        <span class="self-center text-lg whitespace-nowrap w-full overflow-hidden block font-semibold text-black dark:text-white text-black truncate">
+            <img src="{{ course.avatar.avatar_url }}" alt="Course Icon" class="object-cover rounded-lg inline-block"
+                 style="width:40px; height:40px; margin: 10px;">
+            {{ course.name }}
+        </span>
+        <ul class="space-y-2 cursor-pointer">
+            <li>
+                <a href="/course/{{ course_id }}/documents" target="frame"
+                   class="flex items-center p-2 text-base text-gray-900 rounded-lg dark:text-white text-black hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <p class="dark:text-gray-400 material-icons">description</p>
+                    <span class="ml-3">Documents</span>
+                </a>
+            </li>
+            <li>
+                <a href="/course/{{ course_id }}/announcements" target="frame"
+                   class="flex items-center p-2 text-base text-gray-900 rounded-lg dark:text-white text-black hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <p class="dark:text-gray-400 material-icons">campaign</p>
+                    <span class="ml-3">Announcements</span>
+                </a>
+            </li>
+            <li>
+                <a href="/course/{{ course_id }}/grades" target="frame"
+                   class="flex items-center p-2 text-base text-gray-900 rounded-lg dark:text-white text-black hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <p class="dark:text-gray-400 material-icons">trending_up</p>
+                    <span class="ml-3">Grades</span>
+                </a>
+            </li>
+            <li>
+                <a href="/course/{{ course_id }}/information" target="frame"
+                   class="flex items-center p-2 text-base text-gray-900 rounded-lg dark:text-white text-black hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <p class="dark:text-gray-400 material-icons">info</p>
+                    <span class="ml-3">Information</span>
+                </a>
+            </li>
+            <li>
+                <a href="/course/{{ course_id }}/settings" target="frame"
+                   class="flex items-center p-2 text-base text-gray-900 rounded-lg dark:text-white text-black hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <p class="dark:text-gray-400 material-icons">settings</p>
+                    <span class="ml-3">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="/course/{{ course_id }}/textbook" target="frame"
+                   class="flex items-center p-2 text-base text-gray-900 rounded-lg dark:text-white text-black hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <p class="dark:text-gray-400 material-icons">menu_book</p>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Textbook</span>
+                </a>
+            </li>
+            <li>
+                <a href="/course/{{ course_id }}/learning" target="frame"
+                   class="flex items-center p-2 text-base text-gray-900 rounded-lg dark:text-white text-black hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <p class="dark:text-gray-400 material-icons">school</p>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Learning</span>
+                </a>
+            </li>
+            <li>
+                <button class="flex items-center p-2 w-full text-base text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                    <p class="dark:text-gray-400 material-icons">extension</p>
+                    <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Extensions</span>
+                    <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                    </svg>
+                </button>
+                <ul id="dropdown-example" class="hidden py-2 pl-8 space-y-2">
+                    <li>
+                        <a href="/course/{{ course_id }}/extensions/ptable" target="frame"
+                           class="flex items-center p-2 w-full text-base text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <p class="dark:text-gray-400 material-icons">science</p><span
+                                class="ml-3">Periodic Table</span></a>
+                    </li>
+                    <li>
+                        <a href="/course/{{ course_id }}/extensions/ide" target="frame"
+                           class="flex items-center p-2 w-full text-base text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <p class="dark:text-gray-400 material-icons">code</p><span
+                                class="ml-3">Code Editor</span></a>
+                    </li>
+                    <li>
+                        <a href="/course/{{ course_id }}/extensions/wb" target="frame"
+                           class="flex items-center p-2 w-full text-base text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <p class="dark:text-gray-400 material-icons">tv_gen</p>
+                            <span class="ml-3">Whiteboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/course/{{ course_id }}/extensions/plagarism" target="frame"
+                           class="flex items-center p-2 w-full text-base text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <p class="dark:text-gray-400 material-icons">description</p>
+                            <span class="ml-3">Plagiarism Detecter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/course/{{ course_id }}/extensions/maps" target="frame"
+                           class="flex items-center p-2 w-full text-base text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <p class="dark:text-gray-400 material-icons">public</p>
+                            <span class="ml-3">World Map</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/course/{{ course_id }}/extensions/graph" target="frame"
+                           class="flex items-center p-2 w-full text-base text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <p class="dark:text-gray-400 material-icons">trending_up</p>
+                            <span class="ml-3">Graphing Calculator</span></a>
+                    </li>
+                    <li>
+                        <a href="/course/{{ course_id }}/extensions/dict" target="frame"
+                           class="flex items-center p-2 w-full text-base text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <p class="dark:text-gray-400 material-icons">auto_stories</p>
+                            <span class="ml-3">Dictionary</span></a>
+                    </li>
+                    <li>
+                        <a href="/course/{{ course_id }}/extensions" target="frame"
+                           class="flex items-center p-2 w-full text-base text-gray-900 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <p class="dark:text-gray-400 material-icons">add_circle</p><span
+                                class="ml-3">Add an Extension</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+<script src="/static/js/course/sidebar.js"></script>
