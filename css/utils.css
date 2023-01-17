@@ -1,0 +1,90 @@
+body {
+    cursor: url('/static/images/nebulusCats/newRed.png'), auto;
+}
+
+.fade-out {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
+
+.noselect,
+img,
+svg,
+thead,
+button,
+input,
+br {
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+}
+
+.noclick {
+    pointer-events: none;
+}
+
+.material-icons {
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+}
+
+hr {
+    border: 1px solid gray;
+}
+
+/* width */
+::-webkit-scrollbar,
+::-webkit-scrollbar-thumb {
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track-piece {
+    background: #9ca3af;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #555555;
+}
+
+.dark ::-webkit-scrollbar-track-piece {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    width: 10px;
+    height: 10px;
+}
+
+.hover\:scroll {
+    padding-right: 3px;
+}
+
+.hover\:scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.hover\:scroll:hover::-webkit-scrollbar {
+    display: block;
+}
+
+.dark ::selection {
+    background: #3498db;
+}
+
+::selection {
+    background: #aed6f1;
+}

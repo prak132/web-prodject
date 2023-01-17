@@ -1,0 +1,238 @@
+body {
+    background: #0f2027;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    font-family: 'Montserrat';
+    justify-content: center;
+}
+.blurred {
+    filter: blur(40px);
+}
+.container {
+    flex-direction: column;
+    align-items: center;
+}
+.squareContainer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1332px;
+    margin: 0 auto;
+    transition: all 0.2s ease;
+}
+.squareContainer .square {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    box-sizing: border-box;
+    margin: 2px;
+    padding: 2px;
+    overflow: hidden;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+.squareContainer .square .atomicNumber {
+    font-size: 10px;
+}
+.squareContainer .square .symbol {
+    align-self: center;
+}
+.squareContainer .square .name {
+    font-size: 12px;
+    align-self: center;
+}
+.squareContainer .square .atomicMass {
+    font-size: 10px;
+    align-self: center;
+}
+.nonmetal {
+    border: 2px solid #95a5a6;
+    color: #95a5a6;
+}
+.nobleGas {
+    border: 2px solid #8e44ad;
+    color: #8e44ad;
+}
+.alkaliMetal {
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+}
+.alkalineEarthMetal {
+    border: 2px solid #e67e22;
+    color: #e67e22;
+}
+.metalloid {
+    border: 2px solid #3498db;
+    color: #3498db;
+}
+.halogen {
+    border: 2px solid #ec87bf;
+    color: #ec87bf;
+}
+.metal {
+    border: 2px solid #2ecc71;
+    color: #2ecc71;
+}
+.post-transitionMetal {
+    border: 2px solid #1abc9c;
+    color: #1abc9c;
+}
+.transitionMetal {
+    border: 2px solid #f1c40f;
+    color: #f1c40f;
+}
+.lanthanoid {
+    border: 2px solid #f39c12;
+    color: #f39c12;
+}
+.actinoid {
+    border: 2px solid #ecf0f1;
+    color: #ecf0f1;
+}
+.overlay {
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 1000;
+    transition: all 0.2s ease;
+    opacity: 0.2;
+}
+.wholeContainer {
+    position: absolute;
+    top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 400px;
+}
+.wholeContainer > span {
+    border: none;
+}
+.wholeContainer > span:nth-child(1) {
+    font-size: 28px;
+}
+.detailsView {
+    margin-top: 100px;
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 250px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    animation: rotate 4s linear infinite;
+}
+.detailsView .electrons {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: absolute;
+    background: #000;
+}
+.detailsView .electrons:nth-child(1) {
+    top: calc(75% - 10px);
+    left: 0px;
+}
+.detailsView .electrons:nth-child(2) {
+    top: -10px;
+    left: calc(50% - 10px);
+}
+.detailsView .electrons:nth-child(3) {
+    top: calc(75% - 10px);
+    right: 0px;
+}
+.selectedSquare {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    border-width: 6px;
+    transition: all 0.2s ease;
+}
+.detailsView > .selectedSquare {
+    border: none;
+}
+.detailsView > .nonmetal {
+    background: radial-gradient(circle at 150px 150px, #95a5a6, #000);
+}
+.detailsView > .nobleGas {
+    background: radial-gradient(circle at 150px 150px, #8e44ad, #000);
+}
+.detailsView > .alkaliMetal {
+    background: radial-gradient(circle at 150px 150px, #e74c3c, #000);
+}
+.detailsView > .alkalineEarthMetal {
+    background: radial-gradient(circle at 150px 150px, #e67e22, #000);
+}
+.detailsView > .metalloid {
+    background: radial-gradient(circle at 150px 150px, #3498db, #000);
+}
+.detailsView > .halogen {
+    background: radial-gradient(circle at 150px 150px, #ec87bf, #000);
+}
+.detailsView > .metal {
+    background: radial-gradient(circle at 150px 150px, #2ecc71, #000);
+}
+.detailsView > .post-transitionMetal {
+    background: radial-gradient(circle at 150px 150px, #1abc9c, #000);
+}
+.detailsView > .transitionMetal {
+    background: radial-gradient(circle at 150px 150px, #f1c40f, #000);
+}
+.detailsView > .lanthanoid {
+    background: radial-gradient(circle at 150px 150px, #f39c12, #000);
+}
+.detailsView > .actinoid {
+    background: radial-gradient(circle at 150px 150px, #ecf0f1, #000);
+}
+.legend {
+    display: flex;
+    flex-direction: column;
+    align-self: baseline;
+}
+.legend div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 2px;
+    color: #fff;
+}
+.legend .color {
+    height: 14px;
+    width: 30px;
+    margin: 2px;
+}
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+        top: 0px;
+    }
+    50% {
+        transform: rotate(180deg);
+        top: 20px;
+    }
+    100% {
+        transform: rotate(360deg);
+        top: 0px;
+    }
+}
